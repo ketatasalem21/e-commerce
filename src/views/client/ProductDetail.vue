@@ -218,15 +218,15 @@ const getUserStarClass = (starIndex: number) => {
   const productRating = product.value.rating
   
   if (currentUserRating !== null) {
-    // L'utilisateur a noté ce produit - afficher sa note en bleu
+    // L'utilisateur a noté ce produit - afficher sa note en jaune avec effet
     return starIndex <= currentUserRating 
-      ? 'text-blue-500 fill-current user-rating' 
-      : 'text-gray-300 hover:text-blue-400'
-  } else {
-    // L'utilisateur n'a pas noté - afficher la note moyenne en jaune
-    return starIndex <= productRating 
-      ? 'text-yellow-400 fill-current' 
+      ? 'text-yellow-500 fill-current user-rating' 
       : 'text-gray-300 hover:text-yellow-400'
+  } else {
+    // L'utilisateur n'a pas noté - afficher la note moyenne en orange
+    return starIndex <= productRating 
+      ? 'text-orange-400 fill-current' 
+      : 'text-gray-300 hover:text-orange-400'
   }
 }
 
@@ -325,12 +325,12 @@ onMounted(() => {
 }
 
 .user-rating-indicator {
-  color: var(--color-primary);
+  color: #eab308;
   font-weight: 500;
 }
 
 .stars .user-rating {
-  filter: drop-shadow(0 0 4px rgba(59, 130, 246, 0.5));
+  filter: drop-shadow(0 0 4px rgba(234, 179, 8, 0.6));
 }
 
 .stars .w-5:hover {
