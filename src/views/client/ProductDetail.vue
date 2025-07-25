@@ -28,11 +28,17 @@
               <Star 
                 v-for="i in 5" 
                 :key="i"
-                class="w-5 h-5"
-                :class="i <= product.rating ? 'text-yellow-400 fill-current' : 'text-gray-300'"
+                class="w-5 h-5 cursor-pointer"
+                :class="getUserStarClass(i)"
+                @click="rateProduct(i)"
               />
             </div>
-            <span class="rating-text">({{ product.rating }}/5)</span>
+            <span class="rating-text">
+              ({{ userRating !== null ? userRating : product.rating }}/5)
+              <span v-if="userRating !== null" class="user-rating-indicator">
+                - Votre note
+              </span>
+            </span>
           </div>
           
           <div class="product-price">
@@ -143,6 +149,10 @@ const store = useMainStore()
 
 const quantity = ref(1)
 
+const userRating = computed(() => 
+  store.getUserRating(product.value?.id || 0)
+)
+
 const product = computed(() => {
   const id = parseInt(route.params.id as string)
   return store.products.find(p => p.id === id)
@@ -187,6 +197,37 @@ const addToCart = () => {
 
 const addToWishlist = () => {
   console.log('Add to wishlist:', product.value)
+}
+
+const rateProduct = (rating: number) => {
+  if (!store.isAuthenticated) {
+    // Rediriger vers la page de connexion
+    router.push('/auth/login')
+    return
+  }
+  
+  if (product.value) {
+    store.addUserRating(product.value.id, rating)
+  }
+}
+
+const getUserStarClass = (starIndex: number) => {
+  if (!product.value) return 'text-gray-300'
+  
+  const currentUserRating = userRating.value
+  const productRating = product.value.rating
+  
+  if (currentUserRating !== null) {
+    // L'utilisateur a noté ce produit - afficher sa note en bleu
+    return starIndex <= currentUserRating 
+      ? 'text-blue-500 fill-current user-rating' 
+      : 'text-gray-300 hover:text-blue-400'
+  } else {
+    // L'utilisateur n'a pas noté - afficher la note moyenne en jaune
+    return starIndex <= productRating 
+      ? 'text-yellow-400 fill-current' 
+      : 'text-gray-300 hover:text-yellow-400'
+  }
 }
 
 onMounted(() => {
@@ -281,6 +322,20 @@ onMounted(() => {
 .rating-text {
   color: var(--color-gray-600);
   font-size: var(--font-size-sm);
+}
+
+.user-rating-indicator {
+  color: var(--color-primary);
+  font-weight: 500;
+}
+
+.stars .user-rating {
+  filter: drop-shadow(0 0 4px rgba(59, 130, 246, 0.5));
+}
+
+.stars .w-5:hover {
+  transform: scale(1.1);
+  transition: transform 0.2s ease;
 }
 
 .product-price {

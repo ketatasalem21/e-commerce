@@ -36,6 +36,14 @@ export interface User {
   isVerified: boolean
 }
 
+export interface UserRating {
+  id: number
+  userId: number
+  productId: number
+  rating: number
+  createdAt: string
+}
+
 export interface Product {
   id: number
   name: string
@@ -128,6 +136,7 @@ export const useMainStore = defineStore('main', () => {
   const wishlist = ref<WishlistItem[]>([])
   const user = ref<User | null>(null)
   const isAuthenticated = ref(false)
+  const userRatings = ref<UserRating[]>([])
   
   const categories = ref<Category[]>([
     {
@@ -510,11 +519,43 @@ export const useMainStore = defineStore('main', () => {
       product.rating = newRating
     }
   }
+
+  const addUserRating = (productId: number, rating: number) => {
+    if (!user.value) return
+    
+    const existingRating = userRatings.value.find(
+      r => r.userId === user.value!.id && r.productId === productId
+    )
+    
+    if (existingRating) {
+      existingRating.rating = rating
+    } else {
+      userRatings.value.push({
+        id: Date.now(),
+        userId: user.value.id,
+        productId,
+        rating,
+        createdAt: new Date().toISOString()
+      })
+    }
+  }
+
+  const getUserRating = (productId: number): number | null => {
+    if (!user.value) return null
+    
+    const userRating = userRatings.value.find(
+      r => r.userId === user.value!.id && r.productId === productId
+    )
+    
+    return userRating ? userRating.rating : null
+  }
+
   return {
     cart,
     wishlist,
     user,
     isAuthenticated,
+    userRatings,
     products,
     categories,
     customers,
@@ -532,6 +573,8 @@ export const useMainStore = defineStore('main', () => {
     removeFromWishlist,
     login,
     logout,
-    updateProductRating
+    updateProductRating,
+    addUserRating,
+    getUserRating
   }
 })

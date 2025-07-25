@@ -56,12 +56,14 @@
               :key="i"
               class="w-4 h-4 cursor-pointer"
               :class="
-                i <= product.rating ? 'text-yellow-400 fill-current' : 'text-gray-300'
+                getUserStarClass(i)
               "
               @click.stop="rateProduct(i)"
             />
           </div>
-          <span class="text-sm text-gray-500">({{ product.rating }})</span>
+          <span class="text-sm text-gray-500">
+            ({{ userRating !== null ? userRating : product.rating }})
+          </span>
         </div>
 
         <div class="product-footer flex items-center justify-between">
@@ -125,6 +127,10 @@ const isInWishlist = computed(() =>
   store.wishlist.some(item => item.product.id === product.value.id)
 )
 
+const userRating = computed(() => 
+  store.getUserRating(product.value.id)
+)
+
 const navigateToProduct = () => {
   router.push(`/product/${product.value.id}`)
 }
@@ -142,6 +148,12 @@ const toggleWishlist = () => {
 }
 
 const rateProduct = (rating: number) => {
+  if (!store.isAuthenticated) {
+    router.push('/auth/login')
+    return
+  }
+  
+  store.addUserRating(product.value.id, rating)
   const updatedProduct = { ...product.value, rating }
   store.updateProductRating(product.value.id, rating)
   emit('update:product', updatedProduct)
@@ -157,6 +169,23 @@ const formatPrice = (price: number) => {
 const addToCart = () => {
   if (product.value.stock > 0) {
     store.addToCart(product.value)
+  }
+}
+
+const getUserStarClass = (starIndex: number) => {
+  const currentUserRating = userRating.value
+  const productRating = product.value.rating
+  
+  if (currentUserRating !== null) {
+    // L'utilisateur a noté ce produit - afficher sa note en bleu
+    return starIndex <= currentUserRating 
+      ? 'text-blue-500 fill-current user-rating' 
+      : 'text-gray-300 hover:text-blue-400'
+  } else {
+    // L'utilisateur n'a pas noté - afficher la note moyenne en jaune
+    return starIndex <= productRating 
+      ? 'text-yellow-400 fill-current' 
+      : 'text-gray-300 hover:text-yellow-400'
   }
 }
 </script>
@@ -277,6 +306,15 @@ const addToCart = () => {
 
 .stars {
   gap: 2px;
+}
+
+.stars .user-rating {
+  filter: drop-shadow(0 0 4px rgba(59, 130, 246, 0.5));
+}
+
+.stars .w-4:hover {
+  transform: scale(1.1);
+  transition: transform 0.2s ease;
 }
 
 .price-current {
