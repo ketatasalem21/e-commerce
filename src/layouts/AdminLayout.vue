@@ -13,50 +13,69 @@
       </div>
       
       <nav class="sidebar-nav">
-        <RouterLink to="/admin" class="nav-item" exact-active-class="active">
-          <BarChart3 class="w-5 h-5" />
-          <span v-if="!sidebarCollapsed">Dashboard</span>
-        </RouterLink>
+        <!-- Dashboard Section -->
+        <div class="nav-section">
+          <div v-if="!sidebarCollapsed" class="section-title">Dashboard</div>
+          <RouterLink to="/admin" class="nav-item" exact-active-class="active">
+            <ShoppingBag class="w-5 h-5" />
+            <span v-if="!sidebarCollapsed">E-commerce</span>
+          </RouterLink>
+          <RouterLink to="/admin/banking" class="nav-item">
+            <CreditCard class="w-5 h-5" />
+            <span v-if="!sidebarCollapsed">Banking</span>
+          </RouterLink>
+          <RouterLink to="/admin/marketing" class="nav-item">
+            <Megaphone class="w-5 h-5" />
+            <span v-if="!sidebarCollapsed">Marketing</span>
+          </RouterLink>
+        </div>
         
-        <RouterLink to="/admin/products" class="nav-item">
-          <Package class="w-5 h-5" />
-          <span v-if="!sidebarCollapsed">Produits</span>
-        </RouterLink>
+        <!-- Products Section -->
+        <div class="nav-section">
+          <div v-if="!sidebarCollapsed" class="section-title">Produits</div>
+          <RouterLink to="/admin/products" class="nav-item">
+            <Package class="w-5 h-5" />
+            <span v-if="!sidebarCollapsed">Produits</span>
+          </RouterLink>
+          <RouterLink to="/admin/categories" class="nav-item">
+            <Folder class="w-5 h-5" />
+            <span v-if="!sidebarCollapsed">Catégories</span>
+          </RouterLink>
+          <RouterLink to="/admin/inventory" class="nav-item">
+            <Warehouse class="w-5 h-5" />
+            <span v-if="!sidebarCollapsed">Inventaire</span>
+          </RouterLink>
+        </div>
         
-        <RouterLink to="/admin/orders" class="nav-item">
-          <ShoppingCart class="w-5 h-5" />
-          <span v-if="!sidebarCollapsed">Commandes</span>
-        </RouterLink>
+        <!-- Business Section -->
+        <div class="nav-section">
+          <div v-if="!sidebarCollapsed" class="section-title">Business</div>
+          <RouterLink to="/admin/orders" class="nav-item">
+            <ShoppingCart class="w-5 h-5" />
+            <span v-if="!sidebarCollapsed">Commandes</span>
+          </RouterLink>
+          <RouterLink to="/admin/customers" class="nav-item">
+            <Users class="w-5 h-5" />
+            <span v-if="!sidebarCollapsed">Clients</span>
+          </RouterLink>
+          <RouterLink to="/admin/analytics" class="nav-item">
+            <TrendingUp class="w-5 h-5" />
+            <span v-if="!sidebarCollapsed">Analytics</span>
+          </RouterLink>
+          <RouterLink to="/admin/reports" class="nav-item">
+            <ClipboardList class="w-5 h-5" />
+            <span v-if="!sidebarCollapsed">Rapports</span>
+          </RouterLink>
+        </div>
         
-        <RouterLink to="/admin/analytics" class="nav-item">
-          <TrendingUp class="w-5 h-5" />
-          <span v-if="!sidebarCollapsed">Analytics</span>
-        </RouterLink>
-
-        <RouterLink to="/admin/categories" class="nav-item">
-          <Folder class="w-5 h-5" />
-          <span v-if="!sidebarCollapsed">Categories</span>
-        </RouterLink>
-
-        <RouterLink to="/admin/customers" class="nav-item">
-          <Users class="w-5 h-5" />
-          <span v-if="!sidebarCollapsed">Clients</span>
-        </RouterLink>
-
-        <RouterLink to="/admin/inventory" class="nav-item">
-          <Warehouse class="w-5 h-5" />
-          <span v-if="!sidebarCollapsed">Inventaire</span>
-        </RouterLink>
-
-        <RouterLink to="/admin/reports" class="nav-item">
-          <ClipboardList class="w-5 h-5" />
-          <span v-if="!sidebarCollapsed">Rapports</span>
-        </RouterLink>
-
-        <RouterLink to="/admin/settings" class="nav-item">
-          <Settings class="w-5 h-5" />
-          <span v-if="!sidebarCollapsed">Paramètres</span>
-        </RouterLink>
+        <!-- Settings Section -->
+        <div class="nav-section">
+          <div v-if="!sidebarCollapsed" class="section-title">Configuration</div>
+          <RouterLink to="/admin/settings" class="nav-item">
+            <Settings class="w-5 h-5" />
+            <span v-if="!sidebarCollapsed">Paramètres</span>
+          </RouterLink>
+        </div>
       </nav>
       
       <div class="sidebar-footer">
@@ -104,7 +123,6 @@ import { RouterLink, RouterView } from 'vue-router'
 import { 
   ShoppingBag, 
   Menu, 
-  BarChart3, 
   Package, 
   ShoppingCart, 
   TrendingUp, 
@@ -115,7 +133,9 @@ import {
   Settings,
   ClipboardList,
   Warehouse,
-  Folder
+  Folder,
+  CreditCard,
+  Megaphone
 } from 'lucide-vue-next'
 
 const route = useRoute()
@@ -127,7 +147,9 @@ const toggleSidebar = () => {
 
 const pageTitle = computed(() => {
   const routeNames: Record<string, string> = {
-    'AdminDashboard': 'Dashboard',
+    'AdminDashboard': 'E-commerce Dashboard',
+    'AdminBanking': 'Banking Dashboard',
+    'AdminMarketing': 'Marketing Dashboard',
     'AdminProducts': 'Gestion des Produits',
     'AdminOrders': 'Gestion des Commandes',
     'AdminAnalytics': 'Analytics',
@@ -202,6 +224,25 @@ const pageTitle = computed(() => {
 .sidebar-nav {
   flex: 1;
   padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.nav-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.section-title {
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  color: var(--color-gray-500);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0 var(--space-4);
+  margin-bottom: var(--space-2);
 }
 
 .nav-item {

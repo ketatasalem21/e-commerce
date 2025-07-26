@@ -15,6 +15,8 @@ import Wishlist from '../views/client/Wishlist.vue'
 
 // Admin Views
 import AdminDashboard from '../views/admin/Dashboard.vue'
+import AdminBanking from '../views/admin/Banking.vue'
+import AdminMarketing from '../views/admin/Marketing.vue'
 import AdminProducts from '../views/admin/Products.vue'
 import AdminCategories from '../views/admin/Categories.vue'
 import AdminOrders from '../views/admin/Orders.vue'
@@ -73,6 +75,8 @@ const routes = [
     component: AdminLayout,
     children: [
       { path: '', name: 'AdminDashboard', component: AdminDashboard },
+      { path: 'banking', name: 'AdminBanking', component: AdminBanking },
+      { path: 'marketing', name: 'AdminMarketing', component: AdminMarketing },
       { path: 'products', name: 'AdminProducts', component: AdminProducts },
       { path: 'categories', name: 'AdminCategories', component: AdminCategories },
       { path: 'orders', name: 'AdminOrders', component: AdminOrders },
