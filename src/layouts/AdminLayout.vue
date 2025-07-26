@@ -54,6 +54,10 @@
             <ShoppingCart class="w-5 h-5" />
             <span v-if="!sidebarCollapsed">Commandes</span>
           </RouterLink>
+          <RouterLink to="/admin/invoices" class="nav-item">
+            <FileText class="w-5 h-5" />
+            <span v-if="!sidebarCollapsed">Factures</span>
+          </RouterLink>
           <RouterLink to="/admin/customers" class="nav-item">
             <Users class="w-5 h-5" />
             <span v-if="!sidebarCollapsed">Clients</span>
@@ -135,7 +139,8 @@ import {
   Warehouse,
   Folder,
   CreditCard,
-  Megaphone
+  Megaphone,
+  FileText
 } from 'lucide-vue-next'
 
 const route = useRoute()

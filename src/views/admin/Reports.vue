@@ -363,15 +363,71 @@ const submitReport = async () => {
 }
 
 const exportReports = () => {
-  console.log('Export reports')
+  // Create CSV content
+  const csvContent = [
+    ['Nom', 'Type', 'Période', 'Date de génération', 'Statut', 'Taille'].join(','),
+    ...recentReports.value.map(report => [
+      report.name,
+      report.type,
+      report.period,
+      report.generatedAt,
+      report.status,
+      report.size
+    ].join(','))
+  ].join('\n')
+  
+  // Create and download file
+  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' })
+  const link = document.createElement('a')
+  link.href = URL.createObjectURL(blob)
+  link.download = `rapports_${new Date().toISOString().split('T')[0]}.csv`
+  link.click()
+  
+  console.log('Export des rapports terminé')
 }
 
 const downloadReport = (report: any) => {
-  console.log('Download report:', report.id)
+  // Simulate file download
+  const link = document.createElement('a')
+  link.href = '#' // In real app, this would be the actual file URL
+  link.download = `${report.name.replace(/\s+/g, '_')}.pdf`
+  link.click()
+  
+  // Show success message
+  console.log(`Téléchargement de ${report.name} commencé`)
 }
 
 const viewReport = (report: any) => {
-  console.log('View report:', report.id)
+  // Open report in new tab/modal
+  const reportWindow = window.open('', '_blank')
+  if (reportWindow) {
+    reportWindow.document.write(`
+      <html>
+        <head>
+          <title>${report.name}</title>
+          <style>
+            body { font-family: Arial, sans-serif; margin: 20px; }
+            .header { text-align: center; margin-bottom: 30px; }
+            .content { line-height: 1.6; }
+          </style>
+        </head>
+        <body>
+          <div class="header">
+            <h1>${report.name}</h1>
+            <p>Généré le: ${formatDate(report.generatedAt)}</p>
+            <p>Période: ${report.period}</p>
+          </div>
+          <div class="content">
+            <h2>Contenu du rapport</h2>
+            <p>Ce rapport contient les données pour la période ${report.period}.</p>
+            <p>Taille du fichier: ${report.size}</p>
+            <p>Statut: ${report.status}</p>
+          </div>
+        </body>
+      </html>
+    `)
+    reportWindow.document.close()
+  }
 }
 
 const deleteReport = (reportId: number) => {

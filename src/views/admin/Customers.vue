@@ -192,8 +192,10 @@
 import { ref, computed } from 'vue'
 import { Search, Eye, Edit, MessageCircle, X, ShoppingBag, DollarSign, Calendar } from 'lucide-vue-next'
 import { useMainStore, type Customer } from '../../stores/main'
+import { useRouter } from 'vue-router'
 import AnimatedButton from '../../components/ui/AnimatedButton.vue'
 
+const router = useRouter()
 const store = useMainStore()
 
 const searchQuery = ref('')
@@ -297,13 +299,18 @@ const editCustomer = (customer: Customer) => {
 }
 
 const sendMessage = (customer: Customer) => {
-  console.log('Send message to customer:', customer.id)
-  // Implement messaging logic
+  // Create email link
+  const subject = encodeURIComponent(`Message de EliteStore`)
+  const body = encodeURIComponent(`Bonjour ${customer.firstName},\n\n`)
+  const mailtoLink = `mailto:${customer.email}?subject=${subject}&body=${body}`
+  
+  // Open email client
+  window.open(mailtoLink, '_blank')
 }
 
 const viewOrders = (customer: Customer) => {
-  console.log('View orders for customer:', customer.id)
-  // Navigate to orders filtered by customer
+  // Navigate to orders page with customer filter
+  router.push(`/admin/orders?customer=${customer.id}`)
 }
 </script>
 

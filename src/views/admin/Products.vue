@@ -2,7 +2,7 @@
   <div class="admin-products">
     <div class="page-header">
       <h2 class="page-title">Gestion des Produits</h2>
-      <AnimatedButton variant="primary" @click="showAddModal = true">
+      <AnimatedButton variant="primary" @click="$router.push('/admin/products/create')">
         <Plus class="w-5 h-5" />
         Ajouter un produit
       </AnimatedButton>
