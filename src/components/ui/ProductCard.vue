@@ -154,9 +154,9 @@ const rateProduct = (rating: number) => {
   }
   
   store.addUserRating(product.value.id, rating)
-  const updatedProduct = { ...product.value, rating }
-  store.updateProductRating(product.value.id, rating)
-  emit('update:product', updatedProduct)
+  // Optionally update the product's average rating
+  // store.updateProductRating(product.value.id, rating)
+  // emit('update:product', updatedProduct)
 }
 
 const formatPrice = (price: number) => {
@@ -177,15 +177,15 @@ const getUserStarClass = (starIndex: number) => {
   const productRating = product.value.rating
   
   if (currentUserRating !== null) {
-    // L'utilisateur a noté ce produit - afficher sa note en jaune avec effet
+    // L'utilisateur a noté ce produit - afficher sa note en jaune vif
     return starIndex <= currentUserRating 
-      ? 'text-yellow-500 fill-current user-rating' 
+      ? 'text-yellow-400 fill-current user-rating' 
       : 'text-gray-300 hover:text-yellow-400'
   } else {
-    // L'utilisateur n'a pas noté - afficher la note moyenne en orange
+    // L'utilisateur n'a pas noté - afficher la note moyenne en jaune plus doux
     return starIndex <= productRating 
-      ? 'text-orange-400 fill-current' 
-      : 'text-gray-300 hover:text-orange-400'
+      ? 'text-yellow-300 fill-current' 
+      : 'text-gray-300 hover:text-yellow-400'
   }
 }
 </script>
@@ -309,7 +309,17 @@ const getUserStarClass = (starIndex: number) => {
 }
 
 .stars .user-rating {
-  filter: drop-shadow(0 0 4px rgba(234, 179, 8, 0.6));
+  filter: drop-shadow(0 0 6px rgba(250, 204, 21, 0.8));
+  animation: starGlow 2s ease-in-out infinite;
+}
+
+@keyframes starGlow {
+  0%, 100% {
+    filter: drop-shadow(0 0 6px rgba(250, 204, 21, 0.8));
+  }
+  50% {
+    filter: drop-shadow(0 0 10px rgba(250, 204, 21, 1));
+  }
 }
 
 .stars .w-4:hover {
