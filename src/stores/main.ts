@@ -50,6 +50,7 @@ export interface Product {
   price: number
   image: string
   images: string[]
+  colors: ProductColor[]
   category: string
   categoryId: number
   rating: number
@@ -66,6 +67,13 @@ export interface Product {
   isActive: boolean
   createdAt: string
   updatedAt: string
+}
+
+export interface ProductColor {
+  id: number
+  name: string
+  value: string
+  image: string
 }
 
 export interface ProductVariant {
@@ -214,7 +222,29 @@ export const useMainStore = defineStore('main', () => {
       image: "https://images.pexels.com/photos/18105/pexels-photo.jpg?auto=compress&cs=tinysrgb&w=800",
       images: [
         "https://images.pexels.com/photos/18105/pexels-photo.jpg?auto=compress&cs=tinysrgb&w=800",
-        "https://images.pexels.com/photos/205421/pexels-photo-205421.jpeg?auto=compress&cs=tinysrgb&w=800"
+        "https://images.pexels.com/photos/205421/pexels-photo-205421.jpeg?auto=compress&cs=tinysrgb&w=800",
+        "https://images.pexels.com/photos/1029757/pexels-photo-1029757.jpg?auto=compress&cs=tinysrgb&w=800",
+        "https://images.pexels.com/photos/1229861/pexels-photo-1229861.jpg?auto=compress&cs=tinysrgb&w=800"
+      ],
+      colors: [
+        {
+          id: 1,
+          name: "Space Gray",
+          value: "#4a4a4a",
+          image: "https://images.pexels.com/photos/18105/pexels-photo.jpg?auto=compress&cs=tinysrgb&w=800"
+        },
+        {
+          id: 2,
+          name: "Silver",
+          value: "#c0c0c0",
+          image: "https://images.pexels.com/photos/205421/pexels-photo-205421.jpeg?auto=compress&cs=tinysrgb&w=800"
+        },
+        {
+          id: 3,
+          name: "Gold",
+          value: "#ffd700",
+          image: "https://images.pexels.com/photos/1029757/pexels-photo-1029757.jpg?auto=compress&cs=tinysrgb&w=800"
+        }
       ],
       category: "Electronics",
       categoryId: 1,
@@ -260,7 +290,31 @@ export const useMainStore = defineStore('main', () => {
       name: "iPhone 15 Pro",
       price: 1199,
       image: "https://images.pexels.com/photos/47261/pexels-photo-47261.jpeg?auto=compress&cs=tinysrgb&w=800",
-      images: [],
+      images: [
+        "https://images.pexels.com/photos/47261/pexels-photo-47261.jpeg?auto=compress&cs=tinysrgb&w=800",
+        "https://images.pexels.com/photos/788946/pexels-photo-788946.jpeg?auto=compress&cs=tinysrgb&w=800",
+        "https://images.pexels.com/photos/1092644/pexels-photo-1092644.jpg?auto=compress&cs=tinysrgb&w=800"
+      ],
+      colors: [
+        {
+          id: 1,
+          name: "Natural Titanium",
+          value: "#8e8e93",
+          image: "https://images.pexels.com/photos/47261/pexels-photo-47261.jpeg?auto=compress&cs=tinysrgb&w=800"
+        },
+        {
+          id: 2,
+          name: "Blue Titanium",
+          value: "#007aff",
+          image: "https://images.pexels.com/photos/788946/pexels-photo-788946.jpeg?auto=compress&cs=tinysrgb&w=800"
+        },
+        {
+          id: 3,
+          name: "White Titanium",
+          value: "#f2f2f7",
+          image: "https://images.pexels.com/photos/1092644/pexels-photo-1092644.jpg?auto=compress&cs=tinysrgb&w=800"
+        }
+      ],
       category: "Electronics",
       categoryId: 1,
       rating: 4.8,
@@ -283,7 +337,17 @@ export const useMainStore = defineStore('main', () => {
       name: "AirPods Pro",
       price: 279,
       image: "https://images.pexels.com/photos/3780681/pexels-photo-3780681.jpeg?auto=compress&cs=tinysrgb&w=800",
-      images: [],
+      images: [
+        "https://images.pexels.com/photos/3780681/pexels-photo-3780681.jpeg?auto=compress&cs=tinysrgb&w=800"
+      ],
+      colors: [
+        {
+          id: 1,
+          name: "White",
+          value: "#ffffff",
+          image: "https://images.pexels.com/photos/3780681/pexels-photo-3780681.jpeg?auto=compress&cs=tinysrgb&w=800"
+        }
+      ],
       category: "Audio",
       categoryId: 2,
       rating: 4.7,
@@ -306,7 +370,17 @@ export const useMainStore = defineStore('main', () => {
       name: "iPad Air",
       price: 699,
       image: "https://images.pexels.com/photos/1334597/pexels-photo-1334597.jpeg?auto=compress&cs=tinysrgb&w=800",
-      images: [],
+      images: [
+        "https://images.pexels.com/photos/1334597/pexels-photo-1334597.jpeg?auto=compress&cs=tinysrgb&w=800"
+      ],
+      colors: [
+        {
+          id: 1,
+          name: "Space Gray",
+          value: "#4a4a4a",
+          image: "https://images.pexels.com/photos/1334597/pexels-photo-1334597.jpeg?auto=compress&cs=tinysrgb&w=800"
+        }
+      ],
       category: "Electronics",
       categoryId: 1,
       rating: 4.6,
@@ -329,7 +403,17 @@ export const useMainStore = defineStore('main', () => {
       name: "Apple Watch Series 9",
       price: 429,
       image: "https://images.pexels.com/photos/437037/pexels-photo-437037.jpeg?auto=compress&cs=tinysrgb&w=800",
-      images: [],
+      images: [
+        "https://images.pexels.com/photos/437037/pexels-photo-437037.jpeg?auto=compress&cs=tinysrgb&w=800"
+      ],
+      colors: [
+        {
+          id: 1,
+          name: "Midnight",
+          value: "#1d1d1f",
+          image: "https://images.pexels.com/photos/437037/pexels-photo-437037.jpeg?auto=compress&cs=tinysrgb&w=800"
+        }
+      ],
       category: "Wearables",
       categoryId: 3,
       rating: 4.5,
@@ -352,7 +436,17 @@ export const useMainStore = defineStore('main', () => {
       name: "Magic Keyboard",
       price: 199,
       image: "https://images.pexels.com/photos/2115257/pexels-photo-2115257.jpeg?auto=compress&cs=tinysrgb&w=800",
-      images: [],
+      images: [
+        "https://images.pexels.com/photos/2115257/pexels-photo-2115257.jpeg?auto=compress&cs=tinysrgb&w=800"
+      ],
+      colors: [
+        {
+          id: 1,
+          name: "White",
+          value: "#ffffff",
+          image: "https://images.pexels.com/photos/2115257/pexels-photo-2115257.jpeg?auto=compress&cs=tinysrgb&w=800"
+        }
+      ],
       category: "Accessories",
       categoryId: 4,
       rating: 4.4,
