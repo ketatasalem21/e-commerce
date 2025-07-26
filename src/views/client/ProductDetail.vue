@@ -7,20 +7,20 @@
           <div class="main-image">
             <img 
               :src="currentImage" 
-              :alt="product.name"
+              :alt="product?.name"
               class="product-image"
             />
           </div>
           
           <!-- Thumbnail Gallery -->
-          <div class="thumbnail-gallery" v-if="product.images.length > 1">
+          <div class="thumbnail-gallery" v-if="product?.images?.length > 1">
             <button 
-              v-for="(image, index) in product.images"
+              v-for="(image, index) in product?.images || []"
               :key="index"
               @click="currentImage = image"
               :class="['thumbnail-btn', { 'active': currentImage === image }]"
             >
-              <img :src="image" :alt="`${product.name} ${index + 1}`" class="thumbnail-image" />
+              <img :src="image" :alt="`${product?.name} ${index + 1}`" class="thumbnail-image" />
             </button>
           </div>
         </div>
@@ -33,11 +33,11 @@
             <span class="breadcrumb-current">{{ product.name }}</span>
           </div>
           
-          <h1 class="product-title">{{ product.name }}</h1>
+          <h1 class="product-title">{{ product?.name }}</h1>
           
           <div class="product-sku">
             <span class="sku-label">SKU:</span>
-            <span class="sku-value">{{ product.sku }}</span>
+            <span class="sku-value">{{ product?.sku }}</span>
           </div>
           
           <div class="product-rating">
@@ -51,7 +51,7 @@
               />
             </div>
             <span class="rating-text">
-              ({{ userRating !== null ? userRating : product.rating }}/5)
+              ({{ userRating !== null ? userRating : product?.rating }}/5)
               <span v-if="userRating !== null" class="user-rating-indicator">
                 - Votre note
               </span>
@@ -59,32 +59,32 @@
           </div>
           
           <div class="product-price">
-            <span class="price-current">{{ formatPrice(product.price) }}</span>
+            <span class="price-current">{{ formatPrice(product?.price || 0) }}</span>
           </div>
           
           <!-- Color Selection -->
-          <div class="color-selection" v-if="product.colors.length > 1">
-            <h3 class="selection-title">Couleur: <span class="selected-color-name">{{ selectedColor.name }}</span></h3>
+          <div class="color-selection" v-if="product?.colors?.length > 1">
+            <h3 class="selection-title">Couleur: <span class="selected-color-name">{{ selectedColor?.name }}</span></h3>
             <div class="color-options">
               <button 
-                v-for="color in product.colors"
+                v-for="color in product?.colors || []"
                 :key="color.id"
                 @click="selectColor(color)"
-                :class="['color-option', { 'active': selectedColor.id === color.id }]"
+                :class="['color-option', { 'active': selectedColor?.id === color.id }]"
                 :style="{ backgroundColor: color.value }"
                 :title="color.name"
               >
-                <Check v-if="selectedColor.id === color.id" class="w-4 h-4 text-white" />
+                <Check v-if="selectedColor?.id === color.id" class="w-4 h-4 text-white" />
               </button>
             </div>
           </div>
           
-          <p class="product-description">{{ product.description }}</p>
+          <p class="product-description">{{ product?.description }}</p>
           
           <div class="product-meta">
             <div class="meta-item">
               <span class="meta-label">Catégorie:</span>
-              <span class="meta-value">{{ product.category }}</span>
+              <span class="meta-value">{{ product?.category }}</span>
             </div>
             <div class="meta-item">
               <span class="meta-label">Stock:</span>
@@ -105,7 +105,7 @@
               <span class="quantity-value">{{ quantity }}</span>
               <button 
                 @click="increaseQuantity"
-                :disabled="quantity >= product.stock"
+                :disabled="quantity >= (product?.stock || 0)"
                 class="quantity-btn"
               >
                 <Plus class="w-4 h-4" />
@@ -118,11 +118,11 @@
               variant="primary" 
               size="lg"
               @click="addToCart"
-              :disabled="product.stock === 0"
+              :disabled="(product?.stock || 0) === 0"
               class="add-to-cart-btn"
             >
               <ShoppingCart class="w-5 h-5" />
-              {{ product.stock === 0 ? 'Rupture de stock' : 'Ajouter au panier' }}
+              {{ (product?.stock || 0) === 0 ? 'Rupture de stock' : 'Ajouter au panier' }}
             </AnimatedButton>
             
             <AnimatedButton 
@@ -167,12 +167,12 @@
             <div class="tab-content">
               <div v-if="activeTab === 'description'" class="tab-panel">
                 <h4>Description détaillée</h4>
-                <p>{{ product.description }}</p>
-                <div v-if="product.specifications" class="specifications">
+                <p>{{ product?.description }}</p>
+                <div v-if="product?.specifications" class="specifications">
                   <h5>Spécifications</h5>
                   <div class="spec-grid">
                     <div 
-                      v-for="(value, key) in product.specifications"
+                      v-for="(value, key) in product?.specifications || {}"
                       :key="key"
                       class="spec-item"
                     >
@@ -185,9 +185,9 @@
               
               <div v-if="activeTab === 'reviews'" class="tab-panel">
                 <h4>Avis clients</h4>
-                <div v-if="product.reviews.length > 0" class="reviews-list">
+                <div v-if="(product?.reviews?.length || 0) > 0" class="reviews-list">
                   <div 
-                    v-for="review in product.reviews"
+                    v-for="review in product?.reviews || []"
                     :key="review.id"
                     class="review-item"
                   >
@@ -306,13 +306,13 @@ const decreaseQuantity = () => {
 }
 
 const increaseQuantity = () => {
-  if (product.value && quantity.value < product.value.stock) {
+  if (product.value && quantity.value < (product.value.stock || 0)) {
     quantity.value++
   }
 }
 
 const addToCart = () => {
-  if (product.value && product.value.stock > 0) {
+  if (product.value && (product.value.stock || 0) > 0) {
     store.addToCart(product.value, quantity.value)
   }
 }
@@ -358,8 +358,8 @@ const getUserStarClass = (starIndex: number) => {
 
 onMounted(() => {
   if (product.value) {
-    currentImage.value = product.value.image
-    if (product.value.colors.length > 0) {
+    currentImage.value = product.value.image || ''
+    if (product.value.colors && product.value.colors.length > 0) {
       selectedColor.value = product.value.colors[0]
     }
   }
