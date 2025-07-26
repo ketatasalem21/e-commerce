@@ -200,6 +200,7 @@ import { ref, computed } from 'vue'
 import { Search, Eye, Download, Printer, Edit, Plus, X } from 'lucide-vue-next'
 import { useMainStore } from '../../stores/main'
 import AnimatedButton from '../../components/ui/AnimatedButton.vue'
+import { generateInvoicePDF } from '../../utils/pdfGenerator'
 
 const store = useMainStore()
 
@@ -346,8 +347,12 @@ const downloadInvoice = (invoice: any) => {
 
 const printInvoice = (invoice: any) => {
   console.log('Print invoice:', invoice.id)
-  // Implement print logic
-  window.print()
+  generateInvoicePDF({
+    ...invoice,
+    customerEmail: 'client@example.com',
+    customerAddress: '123 Rue de Paris, 75001 Paris',
+    notes: 'Merci pour votre confiance. Paiement à 30 jours.'
+  })
 }
 
 const editInvoice = (invoice: any) => {

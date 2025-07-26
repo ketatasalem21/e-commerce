@@ -103,14 +103,23 @@
         </div>
         
         <div class="table-cell actions-cell">
-          <button @click="viewCustomer(customer)" class="action-btn view-btn">
-            <Eye class="w-4 h-4" />
-          </button>
+          <div class="action-group">
+            <button @click="viewCustomer(customer)" class="action-btn view-btn" title="Voir détails">
+              <Eye class="w-4 h-4" />
+            </button>
+            <div class="action-dropdown">
+              <button @click="viewOrders(customer)" class="dropdown-item">
+                <ShoppingBag class="w-4 h-4" />
+                Voir commandes
+              </button>
+              <button @click="sendMessage(customer)" class="dropdown-item">
+                <MessageCircle class="w-4 h-4" />
+                Contacter
+              </button>
+            </div>
+          </div>
           <button @click="editCustomer(customer)" class="action-btn edit-btn">
             <Edit class="w-4 h-4" />
-          </button>
-          <button @click="sendMessage(customer)" class="action-btn message-btn">
-            <MessageCircle class="w-4 h-4" />
           </button>
         </div>
       </div>
@@ -538,6 +547,62 @@ const viewOrders = (customer: Customer) => {
 
 .actions-cell {
   gap: var(--space-2);
+  position: relative;
+}
+
+.action-group {
+  position: relative;
+  display: inline-block;
+}
+
+.action-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: white;
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-xl);
+  border: 1px solid var(--color-gray-200);
+  min-width: 160px;
+  z-index: 100;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all var(--transition-normal);
+}
+
+.action-group:hover .action-dropdown {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  border: none;
+  background: none;
+  color: var(--color-gray-700);
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  text-align: left;
+}
+
+.dropdown-item:first-child {
+  border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0;
+}
+
+.dropdown-item:last-child {
+  border-radius: 0 0 var(--border-radius-lg) var(--border-radius-lg);
+}
+
+.dropdown-item:hover {
+  background: var(--color-gray-50);
+  color: var(--color-primary);
 }
 
 .action-btn {

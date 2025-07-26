@@ -181,6 +181,7 @@
 import { ref, computed } from 'vue'
 import { Search, Eye, Printer, X } from 'lucide-vue-next'
 import { useMainStore, type Order } from '../../stores/main'
+import { generateOrderPDF } from '../../utils/pdfGenerator'
 
 const store = useMainStore()
 
@@ -288,71 +289,7 @@ const closeOrderDetails = () => {
 
 const printOrder = (order: Order) => {
   console.log('Print order:', order.id)
-  
-  // Create print content
-  const printContent = `
-    <html>
-      <head>
-        <title>Commande #${order.id}</title>
-        <style>
-          body { font-family: Arial, sans-serif; margin: 20px; }
-          .header { text-align: center; margin-bottom: 30px; }
-          .order-info { margin-bottom: 20px; }
-          .items-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
-          .items-table th, .items-table td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-          .items-table th { background-color: #f2f2f2; }
-          .total { text-align: right; font-weight: bold; font-size: 18px; }
-        </style>
-      </head>
-      <body>
-        <div class="header">
-          <h1>EliteStore</h1>
-          <h2>Commande #${order.id}</h2>
-        </div>
-        
-        <div class="order-info">
-          <p><strong>Client:</strong> ${order.customer}</p>
-          <p><strong>Date:</strong> ${formatDate(order.date)}</p>
-          <p><strong>Statut:</strong> ${order.status}</p>
-        </div>
-        
-        <table class="items-table">
-          <thead>
-            <tr>
-              <th>Produit</th>
-              <th>Quantité</th>
-              <th>Prix unitaire</th>
-              <th>Total</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${order.items.map(item => `
-              <tr>
-                <td>${item.product.name}</td>
-                <td>${item.quantity}</td>
-                <td>${formatPrice(item.product.price)}</td>
-                <td>${formatPrice(item.product.price * item.quantity)}</td>
-              </tr>
-            `).join('')}
-          </tbody>
-        </table>
-        
-        <div class="total">
-          <p>Total: ${formatPrice(order.total)}</p>
-        </div>
-      </body>
-    </html>
-  `
-  
-  // Open print window
-  const printWindow = window.open('', '_blank')
-  if (printWindow) {
-    printWindow.document.write(printContent)
-    printWindow.document.close()
-    printWindow.focus()
-    printWindow.print()
-    printWindow.close()
-  }
+  generateOrderPDF(order)
 }
 </script>
 
