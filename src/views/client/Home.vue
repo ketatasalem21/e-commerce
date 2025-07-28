@@ -1,40 +1,47 @@
 <template>
   <div class="home">
-    <!-- Hero Section -->
+    <!-- Hero Section avec animations 3D spectaculaires -->
     <section class="hero">
       <div class="hero-background">
-        <div class="hero-particles">
-          <div v-for="i in 30" :key="i" class="particle" :style="getParticleStyle(i)"></div>
+        <!-- Particules énergétiques -->
+        <div class="energy-field">
+          <div v-for="i in 50" :key="i" class="energy-particles" :style="getEnergyParticleStyle(i)"></div>
         </div>
-        <!-- Éléments 3D flottants -->
+        
+        <!-- Éléments 3D flottants spectaculaires -->
         <div class="floating-3d-elements">
-          <div class="floating-cube cube-rotate"></div>
-          <div class="floating-sphere sphere-orbit"></div>
-          <div class="floating-prism prism-rotate"></div>
-          <div class="floating-hologram hologram"></div>
+          <div class="magic-cube" :style="{ top: '15%', left: '10%' }"></div>
+          <div class="orbital-sphere" :style="{ top: '25%', right: '15%' }"></div>
+          <div class="crystal-prism" :style="{ bottom: '30%', left: '20%' }"></div>
+          <div class="advanced-hologram" :style="{ bottom: '20%', right: '25%' }"></div>
+          <div class="geometric-morph" :style="{ top: '40%', left: '5%' }"></div>
+          <div class="dna-helix" :style="{ top: '60%', right: '10%' }"></div>
+          <div class="dimensional-portal" :style="{ top: '10%', left: '50%', transform: 'translateX(-50%)' }"></div>
+          <div class="fractal-tessellation" :style="{ bottom: '40%', left: '45%' }"></div>
+          <div class="temporal-vortex" :style="{ top: '50%', right: '5%' }"></div>
         </div>
       </div>
       
       <div class="hero-content">
-        <div class="hero-text fade-in-up">
-          <h1 class="hero-title">
-            Découvrez l'<span class="gradient-text">Excellence</span>
+        <div class="hero-text spectacular-entrance">
+          <h1 class="hero-title quantum-levitation">
+            Découvrez l'<span class="gradient-text dimensional-portal">Excellence</span>
           </h1>
-          <p class="hero-description">
+          <p class="hero-description fade-in-up">
             Des produits d'exception pour une expérience shopping unique. 
             Qualité premium, design moderne et innovation technologique.
           </p>
           
-          <div class="hero-stats levitate">
-            <div class="stat-item">
+          <div class="hero-stats quantum-levitation">
+            <div class="stat-item magic-cube">
               <div class="stat-number">{{ featuredProducts.length }}+</div>
               <div class="stat-label">Produits premium</div>
             </div>
-            <div class="stat-item">
+            <div class="stat-item orbital-sphere">
               <div class="stat-number">10k+</div>
               <div class="stat-label">Clients satisfaits</div>
             </div>
-            <div class="stat-item">
+            <div class="stat-item crystal-prism">
               <div class="stat-number">4.9</div>
               <div class="stat-label">Note moyenne</div>
             </div>
@@ -45,7 +52,7 @@
               variant="primary" 
               size="lg"
               @click="$router.push('/products')"
-              class="cta-button float-3d"
+              class="cta-button advanced-hologram"
             >
               Découvrir la collection
             </AnimatedButton>
@@ -53,7 +60,7 @@
               variant="secondary" 
               size="lg"
               @click="scrollToFeatures"
-              class="morph-cube"
+              class="geometric-morph"
             >
               En savoir plus
             </AnimatedButton>
@@ -61,14 +68,17 @@
         </div>
         
         <div class="hero-visual slide-in-right">
-          <div class="hero-image-container">
-            <!-- Cartes flottantes 3D -->
+          <div class="hero-image-container temporal-vortex">
+            <!-- Cartes flottantes 3D spectaculaires -->
             <div class="floating-cards">
               <div 
                 v-for="(product, index) in featuredProducts.slice(0, 3)"
                 :key="product.id"
-                class="floating-card card-flip-3d"
-                :style="{ animationDelay: `${index * 0.2}s` }"
+                class="floating-card fractal-tessellation"
+                :style="{ 
+                  animationDelay: `${index * 0.5}s`,
+                  ...getFloatingCardPosition(index)
+                }"
               >
                 <img :src="product.image" :alt="product.name" />
                 <div class="card-info">
@@ -77,77 +87,80 @@
                 </div>
               </div>
             </div>
+            
             <img 
               src="https://images.pexels.com/photos/1649771/pexels-photo-1649771.jpeg?auto=compress&cs=tinysrgb&w=800" 
               alt="Hero"
-              class="hero-image float-3d"
+              class="hero-image quantum-levitation"
             />
-            <div class="hero-decoration rotate-3d"></div>
-            <!-- Éléments décoratifs 3D -->
+            
+            <!-- Éléments décoratifs 3D spectaculaires -->
             <div class="decoration-elements">
-              <div class="deco-ring rotate-3d"></div>
-              <div class="deco-triangle float-3d"></div>
-              <div class="deco-hexagon hologram"></div>
+              <div class="deco-ring dimensional-portal"></div>
+              <div class="deco-triangle dna-helix"></div>
+              <div class="deco-hexagon advanced-hologram"></div>
+              <div class="deco-diamond magic-cube"></div>
+              <div class="deco-spiral orbital-sphere"></div>
             </div>
           </div>
         </div>
       </div>
     </section>
     
-    <!-- Trust Indicators -->
+    <!-- Trust Indicators avec animations 3D -->
     <section class="trust-section">
       <div class="container">
         <div class="trust-indicators">
-          <div class="trust-item">
-            <Shield class="w-8 h-8" />
+          <div class="trust-item geometric-morph">
+            <Shield class="w-8 h-8 crystal-prism" />
             <span>Paiement 100% sécurisé</span>
           </div>
-          <div class="trust-item">
-            <Truck class="w-8 h-8" />
+          <div class="trust-item fractal-tessellation">
+            <Truck class="w-8 h-8 orbital-sphere" />
             <span>Livraison gratuite dès 50€</span>
           </div>
-          <div class="trust-item">
-            <RotateCcw class="w-8 h-8" />
+          <div class="trust-item advanced-hologram">
+            <RotateCcw class="w-8 h-8 magic-cube" />
             <span>Retour gratuit 30 jours</span>
           </div>
-          <div class="trust-item">
-            <Headphones class="w-8 h-8" />
+          <div class="trust-item dimensional-portal">
+            <Headphones class="w-8 h-8 dna-helix" />
             <span>Support client 24/7</span>
           </div>
         </div>
       </div>
     </section>
     
-    <!-- Features Section -->
+    <!-- Features Section avec animations 3D -->
     <section class="features" ref="featuresSection">
       <div class="container">
-        <div class="section-header">
-          <h2 class="section-title">Pourquoi nous choisir ?</h2>
+        <div class="section-header spectacular-entrance">
+          <h2 class="section-title temporal-vortex">Pourquoi nous choisir ?</h2>
           <p class="section-subtitle">Des avantages exclusifs pour une expérience d'achat exceptionnelle</p>
         </div>
         <div class="features-grid">
           <div 
             v-for="(feature, index) in features" 
             :key="index"
-            class="feature-card stagger-item hover-lift interactive-card levitate"
+            class="feature-card stagger-item hover-lift quantum-levitation"
             :style="{ animationDelay: `${index * 0.3}s` }"
           >
-            <div class="feature-icon float-3d">
-              <component :is="feature.icon" class="w-8 h-8" />
+            <div class="feature-icon dimensional-portal">
+              <component :is="feature.icon" class="w-8 h-8 advanced-hologram" />
             </div>
             <h3 class="feature-title">{{ feature.title }}</h3>
             <p class="feature-description">{{ feature.description }}</p>
-            <div class="feature-number">{{ String(index + 1).padStart(2, '0') }}</div>
+            <div class="feature-number magic-cube">{{ String(index + 1).padStart(2, '0') }}</div>
           </div>
         </div>
       </div>
     </section>
     
-    <!-- Categories Showcase -->
+    <!-- Categories Showcase avec animations 3D -->
     <section class="categories-showcase">
       <div class="container">
         <div class="section-header">
-          <h2 class="section-title">Explorez nos catégories</h2>
+          <h2 class="section-title fractal-tessellation">Explorez nos catégories</h2>
           <p class="section-subtitle">Trouvez exactement ce que vous cherchez</p>
         </div>
         
@@ -155,12 +168,12 @@
           <div 
             v-for="category in activeCategories"
             :key="category.id"
-            class="category-card hover-lift card-flip-3d"
+            class="category-card hover-lift geometric-morph"
             @click="$router.push(`/products?category=${category.slug}`)"
           >
             <div class="category-image">
               <img :src="category.image" :alt="category.name" />
-              <div class="category-overlay">
+              <div class="category-overlay advanced-hologram">
                 <h3 class="category-name">{{ category.name }}</h3>
                 <p class="category-count">{{ category.productsCount }} produits</p>
               </div>
@@ -170,35 +183,40 @@
       </div>
     </section>
     
-    <!-- Featured Products -->
+    <!-- Featured Products avec animations 3D -->
     <section class="featured-products">
       <div class="container">
         <div class="section-header">
-          <h2 class="section-title">Produits vedettes</h2>
+          <h2 class="section-title orbital-sphere">Produits vedettes</h2>
           <p class="section-subtitle">Notre sélection des meilleurs produits</p>
-          <RouterLink to="/products" class="view-all-link">
+          <RouterLink to="/products" class="view-all-link crystal-prism">
             Voir tout
             <ArrowRight class="w-4 h-4" />
           </RouterLink>
         </div>
         
         <div class="products-grid">
-          <ProductCard 
-            v-for="product in featuredProducts"
+          <div 
+            v-for="(product, index) in featuredProducts"
             :key="product.id"
-            :product="product"
-            @quick-view="openQuickView"
-            @update:product="updateProduct"
-          />
+            class="product-wrapper dna-helix"
+            :style="{ animationDelay: `${index * 0.2}s` }"
+          >
+            <ProductCard 
+              :product="product"
+              @quick-view="openQuickView"
+              @update:product="updateProduct"
+            />
+          </div>
         </div>
       </div>
     </section>
     
-    <!-- Testimonials -->
+    <!-- Testimonials avec animations 3D -->
     <section class="testimonials">
       <div class="container">
         <div class="section-header">
-          <h2 class="section-title">Ce que disent nos clients</h2>
+          <h2 class="section-title temporal-vortex">Ce que disent nos clients</h2>
           <p class="section-subtitle">Des avis authentiques de notre communauté</p>
         </div>
         
@@ -206,17 +224,17 @@
           <div 
             v-for="(testimonial, index) in testimonials"
             :key="index"
-            class="testimonial-card stagger-item hologram"
+            class="testimonial-card stagger-item dimensional-portal"
             :style="{ animationDelay: `${index * 0.4}s` }"
           >
             <div class="testimonial-content">
-              <div class="quote-icon rotate-3d">
+              <div class="quote-icon fractal-tessellation">
                 <Quote class="w-6 h-6" />
               </div>
               <p class="testimonial-text">{{ testimonial.text }}</p>
             </div>
             <div class="testimonial-author">
-              <img :src="testimonial.avatar" :alt="testimonial.name" class="author-avatar" />
+              <img :src="testimonial.avatar" :alt="testimonial.name" class="author-avatar advanced-hologram" />
               <div class="author-info">
                 <h4 class="author-name">{{ testimonial.name }}</h4>
                 <p class="author-role">{{ testimonial.role }}</p>
@@ -225,7 +243,7 @@
                 <Star 
                   v-for="i in testimonial.rating" 
                   :key="i"
-                  class="w-4 h-4 text-yellow-400 fill-current float-3d"
+                  class="w-4 h-4 text-yellow-400 fill-current orbital-sphere"
                 />
               </div>
             </div>
@@ -234,14 +252,14 @@
       </div>
     </section>
     
-    <!-- Newsletter Section -->
+    <!-- Newsletter Section avec animations 3D -->
     <section class="newsletter">
       <div class="container">
-        <div class="newsletter-content levitate">
-          <div class="newsletter-icon sphere-orbit">
-            <Mail class="w-12 h-12" />
+        <div class="newsletter-content quantum-levitation">
+          <div class="newsletter-icon temporal-vortex">
+            <Mail class="w-12 h-12 dimensional-portal" />
           </div>
-          <h3 class="newsletter-title">Restez connecté</h3>
+          <h3 class="newsletter-title geometric-morph">Restez connecté</h3>
           <p class="newsletter-description">
             Recevez nos dernières offres exclusives, nouveautés et conseils directement dans votre boîte mail
           </p>
@@ -251,14 +269,14 @@
               v-model="email"
               type="email" 
               placeholder="Votre adresse email"
-              class="newsletter-input float-3d"
+              class="newsletter-input advanced-hologram"
               required
             />
             <AnimatedButton 
               type="submit"
               variant="primary"
               :loading="subscribing"
-              class="quantum-flicker"
+              class="fractal-tessellation"
             >
               S'abonner
             </AnimatedButton>
@@ -266,15 +284,15 @@
           
           <div class="newsletter-benefits">
             <div class="benefit-item">
-              <Check class="w-4 h-4 rotate-3d" />
+              <Check class="w-4 h-4 crystal-prism" />
               <span>Offres exclusives</span>
             </div>
             <div class="benefit-item">
-              <Check class="w-4 h-4 rotate-3d" />
+              <Check class="w-4 h-4 magic-cube" />
               <span>Nouveautés en avant-première</span>
             </div>
             <div class="benefit-item">
-              <Check class="w-4 h-4 rotate-3d" />
+              <Check class="w-4 h-4 orbital-sphere" />
               <span>Conseils d'experts</span>
             </div>
           </div>
@@ -357,19 +375,30 @@ const formatPrice = (price: number) => {
   }).format(price)
 }
 
-const getParticleStyle = (index: number) => {
-  const delay = Math.random() * 4
-  const duration = 4 + Math.random() * 2
+const getEnergyParticleStyle = (index: number) => {
+  const delay = Math.random() * 8
+  const duration = 6 + Math.random() * 4
   const left = Math.random() * 100
-  const size = 2 + Math.random() * 4
+  const size = 3 + Math.random() * 6
+  const hue = Math.random() * 360
   
   return {
     left: `${left}%`,
     animationDelay: `${delay}s`,
     animationDuration: `${duration}s`,
     width: `${size}px`,
-    height: `${size}px`
+    height: `${size}px`,
+    background: `radial-gradient(circle, hsl(${hue}, 70%, 60%) 0%, transparent 70%)`
   }
+}
+
+const getFloatingCardPosition = (index: number) => {
+  const positions = [
+    { top: '10%', left: '-25%' },
+    { top: '60%', right: '-35%' },
+    { bottom: '15%', left: '-15%' }
+  ]
+  return positions[index] || positions[0]
 }
 
 const scrollToFeatures = () => {
@@ -378,7 +407,6 @@ const scrollToFeatures = () => {
 
 const openQuickView = (product: Product) => {
   console.log('Quick view:', product)
-  // Implement quick view modal
 }
 
 const updateProduct = (updatedProduct: Product) => {
@@ -393,7 +421,6 @@ const subscribeNewsletter = async () => {
   
   subscribing.value = true
   
-  // Simulate API call
   await new Promise(resolve => setTimeout(resolve, 1000))
   
   console.log('Newsletter subscription:', email.value)
@@ -405,17 +432,26 @@ const subscribeNewsletter = async () => {
 <style scoped>
 .home {
   overflow-x: hidden;
+  perspective: 2000px;
+  transform-style: preserve-3d;
 }
 
 .hero {
-  min-height: 80vh;
+  min-height: 100vh;
   display: flex;
   align-items: center;
   position: relative;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, 
+    #667eea 0%, 
+    #764ba2 25%,
+    #f093fb 50%,
+    #f5576c 75%,
+    #4facfe 100%
+  );
   color: white;
   overflow: hidden;
-  perspective: 1000px;
+  perspective: 2000px;
+  transform-style: preserve-3d;
 }
 
 .hero-background {
@@ -424,10 +460,11 @@ const subscribeNewsletter = async () => {
   transform-style: preserve-3d;
 }
 
-.hero-particles {
+.energy-field {
   position: absolute;
   inset: 0;
   overflow: hidden;
+  transform-style: preserve-3d;
 }
 
 .floating-3d-elements {
@@ -435,60 +472,14 @@ const subscribeNewsletter = async () => {
   inset: 0;
   pointer-events: none;
   transform-style: preserve-3d;
+  z-index: 1;
 }
 
-.floating-cube {
+.floating-3d-elements > div {
   position: absolute;
-  top: 10%;
-  left: 10%;
-  width: 60px;
-  height: 60px;
-  background: linear-gradient(45deg, rgba(139, 92, 246, 0.3), rgba(59, 130, 246, 0.3));
-  border: 2px solid rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(10px);
+  transform-style: preserve-3d;
 }
 
-.floating-sphere {
-  position: absolute;
-  top: 20%;
-  right: 15%;
-  width: 80px;
-  height: 80px;
-  background: radial-gradient(circle, rgba(16, 185, 129, 0.4), rgba(6, 95, 70, 0.2));
-  border-radius: 50%;
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  backdrop-filter: blur(15px);
-}
-
-.floating-prism {
-  position: absolute;
-  bottom: 30%;
-  left: 20%;
-  width: 0;
-  height: 0;
-  border-left: 30px solid transparent;
-  border-right: 30px solid transparent;
-  border-bottom: 52px solid rgba(245, 158, 11, 0.4);
-  filter: drop-shadow(0 0 20px rgba(245, 158, 11, 0.6));
-}
-
-.floating-hologram {
-  position: absolute;
-  bottom: 20%;
-  right: 25%;
-  width: 70px;
-  height: 70px;
-  background: linear-gradient(45deg, 
-    rgba(139, 92, 246, 0.3) 0%, 
-    rgba(59, 130, 246, 0.3) 25%,
-    rgba(16, 185, 129, 0.3) 50%,
-    rgba(245, 158, 11, 0.3) 75%,
-    rgba(239, 68, 68, 0.3) 100%
-  );
-  border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  backdrop-filter: blur(20px);
-}
 .hero-content {
   max-width: 1280px;
   margin: 0 auto;
@@ -508,13 +499,16 @@ const subscribeNewsletter = async () => {
   line-height: var(--line-height-tight);
   margin-bottom: var(--space-6);
   color: white;
+  text-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
+  transform-style: preserve-3d;
 }
 
 .gradient-text {
-  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 50%, #4facfe 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.8));
 }
 
 .hero-description {
@@ -522,16 +516,24 @@ const subscribeNewsletter = async () => {
   color: rgba(255, 255, 255, 0.9);
   line-height: var(--line-height-relaxed);
   margin-bottom: var(--space-8);
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
 }
 
 .hero-stats {
   display: flex;
   gap: var(--space-8);
   margin-bottom: var(--space-8);
+  transform-style: preserve-3d;
 }
 
 .stat-item {
   text-align: center;
+  padding: var(--space-4);
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: var(--border-radius-xl);
+  backdrop-filter: blur(20px);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  transform-style: preserve-3d;
 }
 
 .stat-number {
@@ -539,6 +541,7 @@ const subscribeNewsletter = async () => {
   font-weight: 700;
   color: white;
   margin-bottom: var(--space-1);
+  text-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
 }
 
 .stat-label {
@@ -549,10 +552,7 @@ const subscribeNewsletter = async () => {
 .hero-actions {
   display: flex;
   gap: var(--space-4);
-}
-
-.cta-button {
-  animation: glow-pulse 3s ease-in-out infinite;
+  transform-style: preserve-3d;
 }
 
 .hero-visual {
@@ -578,37 +578,21 @@ const subscribeNewsletter = async () => {
 
 .floating-card {
   position: absolute;
-  width: 120px;
-  background: white;
+  width: 140px;
+  background: rgba(255, 255, 255, 0.15);
   border-radius: var(--border-radius-xl);
   padding: var(--space-3);
-  box-shadow: var(--shadow-xl);
+  backdrop-filter: blur(20px);
+  border: 2px solid rgba(255, 255, 255, 0.3);
   transform-style: preserve-3d;
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.floating-card:nth-child(1) {
-  top: 10%;
-  left: -20%;
-  animation-delay: 0s;
-}
-
-.floating-card:nth-child(2) {
-  top: 60%;
-  right: -30%;
-  animation-delay: 2s;
-}
-
-.floating-card:nth-child(3) {
-  bottom: 20%;
-  left: -10%;
-  animation-delay: 4s;
+  box-shadow: 
+    0 0 30px rgba(255, 255, 255, 0.3),
+    inset 0 0 20px rgba(255, 255, 255, 0.1);
 }
 
 .floating-card img {
   width: 100%;
-  height: 60px;
+  height: 70px;
   object-fit: cover;
   border-radius: var(--border-radius-md);
   margin-bottom: var(--space-2);
@@ -618,31 +602,24 @@ const subscribeNewsletter = async () => {
   font-size: var(--font-size-xs);
   font-weight: 600;
   margin-bottom: var(--space-1);
-  color: var(--color-gray-900);
+  color: white;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
 }
 
 .card-info p {
   font-size: var(--font-size-xs);
-  color: var(--color-primary);
+  color: #f093fb;
   font-weight: 600;
+  text-shadow: 0 0 10px rgba(240, 147, 251, 0.8);
 }
 
 .hero-image {
   width: 100%;
   height: auto;
   border-radius: var(--border-radius-2xl);
-  box-shadow: var(--shadow-2xl);
-}
-
-.hero-decoration {
-  position: absolute;
-  top: -20px;
-  right: -20px;
-  width: 100px;
-  height: 100px;
-  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-  border-radius: 50%;
-  opacity: 0.1;
+  box-shadow: 
+    0 0 60px rgba(255, 255, 255, 0.4),
+    0 30px 60px rgba(0, 0, 0, 0.3);
   transform-style: preserve-3d;
 }
 
@@ -657,11 +634,12 @@ const subscribeNewsletter = async () => {
   position: absolute;
   top: 15%;
   right: 10%;
-  width: 80px;
-  height: 80px;
-  border: 3px solid rgba(139, 92, 246, 0.4);
+  width: 100px;
+  height: 100px;
+  border: 4px solid rgba(139, 92, 246, 0.6);
   border-radius: 50%;
-  border-top-color: rgba(139, 92, 246, 0.8);
+  border-top-color: rgba(139, 92, 246, 1);
+  border-right-color: rgba(59, 130, 246, 0.8);
 }
 
 .deco-triangle {
@@ -670,32 +648,65 @@ const subscribeNewsletter = async () => {
   right: 5%;
   width: 0;
   height: 0;
-  border-left: 25px solid transparent;
-  border-right: 25px solid transparent;
-  border-bottom: 43px solid rgba(16, 185, 129, 0.5);
+  border-left: 35px solid transparent;
+  border-right: 35px solid transparent;
+  border-bottom: 60px solid rgba(16, 185, 129, 0.6);
+  filter: drop-shadow(0 0 20px rgba(16, 185, 129, 0.8));
 }
 
 .deco-hexagon {
   position: absolute;
   top: 40%;
   left: -15%;
+  width: 80px;
+  height: 80px;
+  background: rgba(245, 158, 11, 0.5);
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  border: 3px solid rgba(245, 158, 11, 0.8);
+  filter: drop-shadow(0 0 25px rgba(245, 158, 11, 0.9));
+}
+
+.deco-diamond {
+  position: absolute;
+  top: 70%;
+  left: 60%;
   width: 60px;
   height: 60px;
-  background: rgba(245, 158, 11, 0.3);
-  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-  border: 2px solid rgba(245, 158, 11, 0.6);
+  background: rgba(239, 68, 68, 0.6);
+  transform: rotate(45deg);
+  border: 2px solid rgba(239, 68, 68, 0.8);
+  filter: drop-shadow(0 0 20px rgba(239, 68, 68, 0.9));
+}
+
+.deco-spiral {
+  position: absolute;
+  bottom: 50%;
+  right: 40%;
+  width: 70px;
+  height: 70px;
+  background: conic-gradient(from 0deg, 
+    rgba(139, 92, 246, 0.8) 0deg,
+    rgba(59, 130, 246, 0.6) 120deg,
+    rgba(16, 185, 129, 0.8) 240deg,
+    rgba(139, 92, 246, 0.8) 360deg
+  );
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.4);
 }
 
 .trust-section {
   padding: var(--space-12) 0;
-  background: white;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
   border-bottom: 1px solid var(--color-gray-200);
+  transform-style: preserve-3d;
 }
 
 .trust-indicators {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: var(--space-8);
+  transform-style: preserve-3d;
 }
 
 .trust-item {
@@ -705,10 +716,17 @@ const subscribeNewsletter = async () => {
   gap: var(--space-3);
   text-align: center;
   color: var(--color-gray-600);
+  padding: var(--space-6);
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: var(--border-radius-xl);
+  backdrop-filter: blur(15px);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  transform-style: preserve-3d;
 }
 
 .trust-item svg {
   color: var(--color-primary);
+  filter: drop-shadow(0 0 10px rgba(139, 92, 246, 0.5));
 }
 
 .container {
@@ -720,6 +738,7 @@ const subscribeNewsletter = async () => {
 .section-header {
   text-align: center;
   margin-bottom: var(--space-12);
+  transform-style: preserve-3d;
 }
 
 .section-title {
@@ -727,6 +746,8 @@ const subscribeNewsletter = async () => {
   font-weight: 700;
   margin-bottom: var(--space-8);
   color: var(--color-gray-900);
+  text-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
+  transform-style: preserve-3d;
 }
 
 .section-subtitle {
@@ -738,8 +759,13 @@ const subscribeNewsletter = async () => {
 
 .features {
   padding: var(--space-20) 0;
-  background: var(--color-gray-50);
-  perspective: 1000px;
+  background: linear-gradient(135deg, 
+    rgba(249, 250, 251, 0.9) 0%,
+    rgba(243, 244, 246, 0.9) 100%
+  );
+  backdrop-filter: blur(20px);
+  perspective: 2000px;
+  transform-style: preserve-3d;
 }
 
 .features-grid {
@@ -752,15 +778,15 @@ const subscribeNewsletter = async () => {
 .feature-card {
   text-align: center;
   padding: var(--space-8);
-  background: white;
+  background: rgba(255, 255, 255, 0.9);
   border-radius: var(--border-radius-xl);
   box-shadow: var(--shadow-md);
   transition: all var(--transition-normal);
   position: relative;
   overflow: hidden;
   transform-style: preserve-3d;
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(15px);
+  border: 2px solid rgba(255, 255, 255, 0.2);
 }
 
 .feature-card::before {
@@ -780,11 +806,15 @@ const subscribeNewsletter = async () => {
 }
 
 .feature-card:hover {
-  transform: perspective(1000px) rotateX(10deg) rotateY(10deg) translateZ(20px);
+  transform: perspective(1000px) rotateX(15deg) rotateY(15deg) translateZ(30px);
+  box-shadow: 
+    0 0 50px rgba(139, 92, 246, 0.4),
+    0 30px 60px rgba(0, 0, 0, 0.2);
 }
+
 .feature-icon {
-  width: 80px;
-  height: 80px;
+  width: 100px;
+  height: 100px;
   background: var(--gradient-primary);
   border-radius: var(--border-radius-2xl);
   display: flex;
@@ -795,7 +825,9 @@ const subscribeNewsletter = async () => {
   position: relative;
   z-index: 2;
   transform-style: preserve-3d;
-  box-shadow: 0 10px 30px rgba(139, 92, 246, 0.3);
+  box-shadow: 
+    0 0 40px rgba(139, 92, 246, 0.5),
+    0 20px 40px rgba(139, 92, 246, 0.3);
 }
 
 .feature-title {
@@ -814,27 +846,32 @@ const subscribeNewsletter = async () => {
   position: absolute;
   top: var(--space-4);
   right: var(--space-4);
-  width: 32px;
-  height: 32px;
-  background: var(--color-gray-100);
+  width: 40px;
+  height: 40px;
+  background: rgba(139, 92, 246, 0.1);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 700;
-  color: var(--color-gray-500);
+  color: var(--color-primary);
   font-size: var(--font-size-sm);
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(139, 92, 246, 0.3);
 }
 
 .categories-showcase {
   padding: var(--space-20) 0;
-  background: white;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  transform-style: preserve-3d;
 }
 
 .categories-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: var(--space-6);
+  transform-style: preserve-3d;
 }
 
 .category-card {
@@ -842,6 +879,16 @@ const subscribeNewsletter = async () => {
   border-radius: var(--border-radius-xl);
   overflow: hidden;
   transition: all var(--transition-normal);
+  transform-style: preserve-3d;
+  backdrop-filter: blur(15px);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.category-card:hover {
+  transform: perspective(1000px) rotateX(10deg) rotateY(10deg) translateZ(20px);
+  box-shadow: 
+    0 0 40px rgba(139, 92, 246, 0.3),
+    0 20px 40px rgba(0, 0, 0, 0.2);
 }
 
 .category-image {
@@ -858,7 +905,7 @@ const subscribeNewsletter = async () => {
 }
 
 .category-card:hover .category-image img {
-  transform: scale(1.1);
+  transform: scale(1.1) rotateZ(2deg);
 }
 
 .category-overlay {
@@ -870,12 +917,14 @@ const subscribeNewsletter = async () => {
   justify-content: flex-end;
   padding: var(--space-6);
   color: white;
+  backdrop-filter: blur(10px);
 }
 
 .category-name {
   font-size: var(--font-size-xl);
   font-weight: 600;
   margin-bottom: var(--space-2);
+  text-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
 }
 
 .category-count {
@@ -885,7 +934,12 @@ const subscribeNewsletter = async () => {
 
 .featured-products {
   padding: var(--space-20) 0;
-  background: var(--color-gray-50);
+  background: linear-gradient(135deg, 
+    rgba(249, 250, 251, 0.9) 0%,
+    rgba(243, 244, 246, 0.9) 100%
+  );
+  backdrop-filter: blur(20px);
+  transform-style: preserve-3d;
 }
 
 .section-header {
@@ -903,39 +957,54 @@ const subscribeNewsletter = async () => {
   text-decoration: none;
   font-weight: 500;
   transition: all var(--transition-normal);
+  transform-style: preserve-3d;
 }
 
 .view-all-link:hover {
   gap: var(--space-3);
+  transform: translateZ(10px);
 }
 
 .products-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: var(--space-8);
+  transform-style: preserve-3d;
+}
+
+.product-wrapper {
+  transform-style: preserve-3d;
 }
 
 .testimonials {
   padding: var(--space-20) 0;
-  background: white;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  transform-style: preserve-3d;
 }
 
 .testimonials-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: var(--space-8);
+  transform-style: preserve-3d;
 }
 
 .testimonial-card {
-  background: var(--color-gray-50);
+  background: rgba(249, 250, 251, 0.8);
   border-radius: var(--border-radius-xl);
   padding: var(--space-8);
   transition: all var(--transition-normal);
+  transform-style: preserve-3d;
+  backdrop-filter: blur(15px);
+  border: 2px solid rgba(255, 255, 255, 0.3);
 }
 
 .testimonial-card:hover {
-  transform: translateY(-8px);
-  box-shadow: var(--shadow-xl);
+  transform: perspective(1000px) rotateX(5deg) rotateY(5deg) translateZ(15px);
+  box-shadow: 
+    0 0 40px rgba(139, 92, 246, 0.3),
+    0 20px 40px rgba(0, 0, 0, 0.1);
 }
 
 .testimonial-content {
@@ -945,16 +1014,18 @@ const subscribeNewsletter = async () => {
 
 .quote-icon {
   position: absolute;
-  top: -10px;
-  left: -10px;
-  width: 40px;
-  height: 40px;
+  top: -15px;
+  left: -15px;
+  width: 50px;
+  height: 50px;
   background: var(--gradient-primary);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   color: white;
+  transform-style: preserve-3d;
+  box-shadow: 0 0 20px rgba(139, 92, 246, 0.5);
 }
 
 .testimonial-text {
@@ -971,10 +1042,12 @@ const subscribeNewsletter = async () => {
 }
 
 .author-avatar {
-  width: 50px;
-  height: 50px;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
   object-fit: cover;
+  border: 3px solid rgba(139, 92, 246, 0.3);
+  transform-style: preserve-3d;
 }
 
 .author-info {
@@ -999,32 +1072,46 @@ const subscribeNewsletter = async () => {
 
 .newsletter {
   padding: var(--space-20) 0;
-  background: var(--gradient-dark);
+  background: linear-gradient(135deg, 
+    #667eea 0%, 
+    #764ba2 25%,
+    #f093fb 50%,
+    #f5576c 75%,
+    #4facfe 100%
+  );
   color: white;
+  transform-style: preserve-3d;
 }
 
 .newsletter-content {
   text-align: center;
   max-width: 600px;
   margin: 0 auto;
+  transform-style: preserve-3d;
 }
 
 .newsletter-icon {
-  width: 80px;
-  height: 80px;
-  background: rgba(255, 255, 255, 0.1);
+  width: 120px;
+  height: 120px;
+  background: rgba(255, 255, 255, 0.15);
   border-radius: var(--border-radius-2xl);
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 0 auto var(--space-6);
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(20px);
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  transform-style: preserve-3d;
+  box-shadow: 
+    0 0 50px rgba(255, 255, 255, 0.3),
+    inset 0 0 30px rgba(255, 255, 255, 0.1);
 }
 
 .newsletter-title {
   font-size: var(--font-size-3xl);
   font-weight: 700;
   margin-bottom: var(--space-4);
+  text-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
 }
 
 .newsletter-description {
@@ -1032,6 +1119,7 @@ const subscribeNewsletter = async () => {
   margin-bottom: var(--space-8);
   opacity: 0.9;
   line-height: var(--line-height-relaxed);
+  text-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
 }
 
 .newsletter-form {
@@ -1040,6 +1128,7 @@ const subscribeNewsletter = async () => {
   max-width: 400px;
   margin: 0 auto;
   margin-bottom: var(--space-8);
+  transform-style: preserve-3d;
 }
 
 .newsletter-input {
@@ -1048,10 +1137,11 @@ const subscribeNewsletter = async () => {
   border: none;
   border-radius: var(--border-radius-lg);
   font-size: var(--font-size-base);
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.15);
   color: white;
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(15px);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  transform-style: preserve-3d;
 }
 
 .newsletter-input::placeholder {
@@ -1060,8 +1150,9 @@ const subscribeNewsletter = async () => {
 
 .newsletter-input:focus {
   outline: none;
-  border-color: rgba(255, 255, 255, 0.4);
-  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
 }
 
 .newsletter-benefits {
@@ -1069,6 +1160,7 @@ const subscribeNewsletter = async () => {
   justify-content: center;
   gap: var(--space-6);
   flex-wrap: wrap;
+  transform-style: preserve-3d;
 }
 
 .benefit-item {
@@ -1077,6 +1169,11 @@ const subscribeNewsletter = async () => {
   gap: var(--space-2);
   font-size: var(--font-size-sm);
   opacity: 0.9;
+  padding: var(--space-2) var(--space-4);
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: var(--border-radius-lg);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 @media (max-width: 768px) {
@@ -1099,14 +1196,8 @@ const subscribeNewsletter = async () => {
     align-items: center;
   }
   
-  .floating-cards {
-    display: none;
-  }
-  
-  .floating-3d-elements {
-    display: none;
-  }
-  
+  .floating-cards,
+  .floating-3d-elements,
   .decoration-elements {
     display: none;
   }
@@ -1143,18 +1234,9 @@ const subscribeNewsletter = async () => {
 }
 
 @media (max-width: 480px) {
-  .trust-indicators {
-    grid-template-columns: 1fr;
-  }
-  
-  .features-grid {
-    grid-template-columns: 1fr;
-  }
-  
-  .categories-grid {
-    grid-template-columns: 1fr;
-  }
-  
+  .trust-indicators,
+  .features-grid,
+  .categories-grid,
   .products-grid {
     grid-template-columns: 1fr;
   }
