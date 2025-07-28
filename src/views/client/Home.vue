@@ -829,14 +829,12 @@ const subscribeNewsletter = async () => {
 .categories-showcase {
   padding: var(--space-20) 0;
   background: white;
-  perspective: 1000px;
 }
 
 .categories-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: var(--space-6);
-  transform-style: preserve-3d;
 }
 
 .category-card {
@@ -844,11 +842,6 @@ const subscribeNewsletter = async () => {
   border-radius: var(--border-radius-xl);
   overflow: hidden;
   transition: all var(--transition-normal);
-  transform-style: preserve-3d;
-}
-
-.category-card:hover {
-  transform: perspective(1000px) rotateY(15deg) rotateX(5deg) translateZ(30px);
 }
 
 .category-image {
@@ -1107,6 +1100,14 @@ const subscribeNewsletter = async () => {
   }
   
   .floating-cards {
+    display: none;
+  }
+  
+  .floating-3d-elements {
+    display: none;
+  }
+  
+  .decoration-elements {
     display: none;
   }
   
