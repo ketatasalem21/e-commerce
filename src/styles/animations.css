@@ -11,6 +11,212 @@
   --duration-extra-slow: 0.8s;
 }
 
+/* Animations 3D avancées */
+@keyframes float3D {
+  0%, 100% {
+    transform: translateY(0px) rotateX(0deg) rotateY(0deg);
+  }
+  25% {
+    transform: translateY(-20px) rotateX(5deg) rotateY(5deg);
+  }
+  50% {
+    transform: translateY(-10px) rotateX(-3deg) rotateY(-3deg);
+  }
+  75% {
+    transform: translateY(-25px) rotateX(3deg) rotateY(-5deg);
+  }
+}
+
+@keyframes rotate3D {
+  0% {
+    transform: perspective(1000px) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+  }
+  25% {
+    transform: perspective(1000px) rotateX(15deg) rotateY(90deg) rotateZ(5deg);
+  }
+  50% {
+    transform: perspective(1000px) rotateX(-10deg) rotateY(180deg) rotateZ(-5deg);
+  }
+  75% {
+    transform: perspective(1000px) rotateX(10deg) rotateY(270deg) rotateZ(3deg);
+  }
+  100% {
+    transform: perspective(1000px) rotateX(0deg) rotateY(360deg) rotateZ(0deg);
+  }
+}
+
+@keyframes cardFlip3D {
+  0% {
+    transform: perspective(1000px) rotateY(0deg) scale(1);
+  }
+  50% {
+    transform: perspective(1000px) rotateY(-90deg) scale(1.1);
+  }
+  100% {
+    transform: perspective(1000px) rotateY(0deg) scale(1);
+  }
+}
+
+@keyframes cubeRotate {
+  0% {
+    transform: perspective(1000px) rotateX(0deg) rotateY(0deg);
+  }
+  25% {
+    transform: perspective(1000px) rotateX(90deg) rotateY(0deg);
+  }
+  50% {
+    transform: perspective(1000px) rotateX(90deg) rotateY(90deg);
+  }
+  75% {
+    transform: perspective(1000px) rotateX(0deg) rotateY(90deg);
+  }
+  100% {
+    transform: perspective(1000px) rotateX(0deg) rotateY(0deg);
+  }
+}
+
+@keyframes sphereOrbit {
+  0% {
+    transform: perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(100px);
+  }
+  25% {
+    transform: perspective(1000px) rotateX(90deg) rotateY(90deg) translateZ(150px);
+  }
+  50% {
+    transform: perspective(1000px) rotateX(180deg) rotateY(180deg) translateZ(100px);
+  }
+  75% {
+    transform: perspective(1000px) rotateX(270deg) rotateY(270deg) translateZ(150px);
+  }
+  100% {
+    transform: perspective(1000px) rotateX(360deg) rotateY(360deg) translateZ(100px);
+  }
+}
+
+@keyframes hologram {
+  0%, 100% {
+    transform: perspective(1000px) rotateY(0deg) scale(1);
+    opacity: 0.8;
+    filter: hue-rotate(0deg) brightness(1);
+  }
+  25% {
+    transform: perspective(1000px) rotateY(90deg) scale(1.1);
+    opacity: 0.9;
+    filter: hue-rotate(90deg) brightness(1.2);
+  }
+  50% {
+    transform: perspective(1000px) rotateY(180deg) scale(0.9);
+    opacity: 1;
+    filter: hue-rotate(180deg) brightness(0.8);
+  }
+  75% {
+    transform: perspective(1000px) rotateY(270deg) scale(1.05);
+    opacity: 0.85;
+    filter: hue-rotate(270deg) brightness(1.1);
+  }
+}
+
+@keyframes prismRotate {
+  0% {
+    transform: perspective(1000px) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+    filter: hue-rotate(0deg);
+  }
+  33% {
+    transform: perspective(1000px) rotateX(120deg) rotateY(120deg) rotateZ(120deg);
+    filter: hue-rotate(120deg);
+  }
+  66% {
+    transform: perspective(1000px) rotateX(240deg) rotateY(240deg) rotateZ(240deg);
+    filter: hue-rotate(240deg);
+  }
+  100% {
+    transform: perspective(1000px) rotateX(360deg) rotateY(360deg) rotateZ(360deg);
+    filter: hue-rotate(360deg);
+  }
+}
+
+@keyframes levitate {
+  0%, 100% {
+    transform: perspective(1000px) translateY(0px) rotateX(0deg);
+    box-shadow: 0 10px 40px rgba(139, 92, 246, 0.3);
+  }
+  50% {
+    transform: perspective(1000px) translateY(-30px) rotateX(10deg);
+    box-shadow: 0 30px 60px rgba(139, 92, 246, 0.5);
+  }
+}
+
+@keyframes morphCube {
+  0%, 100% {
+    transform: perspective(1000px) rotateX(0deg) rotateY(0deg);
+    border-radius: 12px;
+  }
+  25% {
+    transform: perspective(1000px) rotateX(90deg) rotateY(45deg);
+    border-radius: 50%;
+  }
+  50% {
+    transform: perspective(1000px) rotateX(180deg) rotateY(90deg);
+    border-radius: 0px;
+  }
+  75% {
+    transform: perspective(1000px) rotateX(270deg) rotateY(135deg);
+    border-radius: 25px;
+  }
+}
+
+@keyframes quantumFlicker {
+  0%, 100% {
+    transform: perspective(1000px) scale(1) rotateY(0deg);
+    opacity: 1;
+    filter: blur(0px) hue-rotate(0deg);
+  }
+  10% {
+    transform: perspective(1000px) scale(1.05) rotateY(36deg);
+    opacity: 0.9;
+    filter: blur(1px) hue-rotate(36deg);
+  }
+  20% {
+    transform: perspective(1000px) scale(0.95) rotateY(72deg);
+    opacity: 0.8;
+    filter: blur(0px) hue-rotate(72deg);
+  }
+  30% {
+    transform: perspective(1000px) scale(1.1) rotateY(108deg);
+    opacity: 0.95;
+    filter: blur(2px) hue-rotate(108deg);
+  }
+  40% {
+    transform: perspective(1000px) scale(0.9) rotateY(144deg);
+    opacity: 0.85;
+    filter: blur(0px) hue-rotate(144deg);
+  }
+  50% {
+    transform: perspective(1000px) scale(1.15) rotateY(180deg);
+    opacity: 1;
+    filter: blur(3px) hue-rotate(180deg);
+  }
+  60% {
+    transform: perspective(1000px) scale(0.85) rotateY(216deg);
+    opacity: 0.9;
+    filter: blur(1px) hue-rotate(216deg);
+  }
+  70% {
+    transform: perspective(1000px) scale(1.08) rotateY(252deg);
+    opacity: 0.95;
+    filter: blur(0px) hue-rotate(252deg);
+  }
+  80% {
+    transform: perspective(1000px) scale(0.92) rotateY(288deg);
+    opacity: 0.88;
+    filter: blur(2px) hue-rotate(288deg);
+  }
+  90% {
+    transform: perspective(1000px) scale(1.03) rotateY(324deg);
+    opacity: 0.92;
+    filter: blur(1px) hue-rotate(324deg);
+  }
+}
 /* Morphing animations */
 @keyframes morphScale {
   0% {
@@ -467,6 +673,56 @@
   animation: glow 2s ease-in-out infinite;
 }
 
+/* Classes d'animation 3D */
+.float-3d {
+  animation: float3D 6s ease-in-out infinite;
+  transform-style: preserve-3d;
+}
+
+.rotate-3d {
+  animation: rotate3D 20s linear infinite;
+  transform-style: preserve-3d;
+}
+
+.card-flip-3d {
+  animation: cardFlip3D 4s ease-in-out infinite;
+  transform-style: preserve-3d;
+}
+
+.cube-rotate {
+  animation: cubeRotate 8s ease-in-out infinite;
+  transform-style: preserve-3d;
+}
+
+.sphere-orbit {
+  animation: sphereOrbit 12s linear infinite;
+  transform-style: preserve-3d;
+}
+
+.hologram {
+  animation: hologram 5s ease-in-out infinite;
+  transform-style: preserve-3d;
+}
+
+.prism-rotate {
+  animation: prismRotate 10s linear infinite;
+  transform-style: preserve-3d;
+}
+
+.levitate {
+  animation: levitate 4s ease-in-out infinite;
+  transform-style: preserve-3d;
+}
+
+.morph-cube {
+  animation: morphCube 6s ease-in-out infinite;
+  transform-style: preserve-3d;
+}
+
+.quantum-flicker {
+  animation: quantumFlicker 3s ease-in-out infinite;
+  transform-style: preserve-3d;
+}
 /* Transitions avancées */
 .smooth-transform {
   transition: transform var(--duration-normal) var(--ease-out-expo);
