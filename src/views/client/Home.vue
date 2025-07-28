@@ -509,6 +509,8 @@ const subscribeNewsletter = async () => {
   -webkit-text-fill-color: transparent;
   background-clip: text;
   filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.8));
+  display: inline-block;
+  transform-style: preserve-3d;
 }
 
 .hero-description {
