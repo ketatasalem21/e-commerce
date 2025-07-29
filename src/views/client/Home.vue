@@ -25,54 +25,84 @@
       <div class="hero-content">
         <div class="hero-text spectacular-entrance">
           <h1 class="hero-title quantum-levitation">
-            Découvrez l'<span class="gradient-text dimensional-portal">Excellence</span>
+            Découvrez l'<span class="gradient-text">Excellence</span>
           </h1>
           
           <!-- Animation de photos juice pour e-commerce -->
           <div class="excellence-photos-container">
-            <div class="juice-photo juice-photo-float" :style="{ animationDelay: '0s' }">
+            <div 
+              class="juice-photo juice-photo-float" 
+              :style="{ animationDelay: '0s' }"
+              @click="handlePhotoClick('macbook')"
+              @mouseenter="handlePhotoHover('macbook')"
+            >
               <img src="https://images.pexels.com/photos/18105/pexels-photo.jpg?auto=compress&cs=tinysrgb&w=300" 
                    alt="MacBook Pro" class="juice-photo-img" />
               <div class="photo-overlay">
                 <span class="photo-label">MacBook Pro M3</span>
                 <span class="photo-price">€2,499</span>
               </div>
+              <div class="photo-glow"></div>
             </div>
             
-            <div class="juice-photo photo-morphing" :style="{ animationDelay: '2s' }">
+            <div 
+              class="juice-photo photo-morphing" 
+              :style="{ animationDelay: '2s' }"
+              @click="handlePhotoClick('iphone')"
+              @mouseenter="handlePhotoHover('iphone')"
+            >
               <img src="https://images.pexels.com/photos/788946/pexels-photo-788946.jpeg?auto=compress&cs=tinysrgb&w=300" 
                    alt="iPhone 15 Pro" class="juice-photo-img" />
               <div class="photo-overlay">
                 <span class="photo-label">iPhone 15 Pro</span>
                 <span class="photo-price">€1,199</span>
               </div>
+              <div class="photo-glow"></div>
             </div>
             
-            <div class="juice-photo photo-gallery-3d" :style="{ animationDelay: '4s' }">
+            <div 
+              class="juice-photo photo-gallery-3d" 
+              :style="{ animationDelay: '4s' }"
+              @click="handlePhotoClick('airpods')"
+              @mouseenter="handlePhotoHover('airpods')"
+            >
               <img src="https://images.pexels.com/photos/3780681/pexels-photo-3780681.jpeg?auto=compress&cs=tinysrgb&w=300" 
                    alt="AirPods Pro" class="juice-photo-img" />
               <div class="photo-overlay">
                 <span class="photo-label">AirPods Pro</span>
                 <span class="photo-price">€279</span>
               </div>
+              <div class="photo-glow"></div>
             </div>
             
-            <div class="juice-photo photo-stack" :style="{ animationDelay: '1s' }">
+            <div 
+              class="juice-photo photo-stack" 
+              :style="{ animationDelay: '1s' }"
+              @click="handlePhotoClick('watch')"
+              @mouseenter="handlePhotoHover('watch')"
+            >
               <img src="https://images.pexels.com/photos/437037/pexels-photo-437037.jpeg?auto=compress&cs=tinysrgb&w=300" 
                    alt="Apple Watch" class="juice-photo-img" />
               <div class="photo-overlay">
                 <span class="photo-label">Apple Watch</span>
                 <span class="photo-price">€429</span>
               </div>
+              <div class="photo-glow"></div>
             </div>
             
-            <div class="juice-photo juice-photo-float" :style="{ animationDelay: '3s' }">
+            <div 
+              class="juice-photo juice-photo-float" 
+              :style="{ animationDelay: '3s' }"
+              @click="handlePhotoClick('ipad')"
+              @mouseenter="handlePhotoHover('ipad')"
+            >
               <img src="https://images.pexels.com/photos/1334597/pexels-photo-1334597.jpeg?auto=compress&cs=tinysrgb&w=300" 
                    alt="iPad Air" class="juice-photo-img" />
               <div class="photo-overlay">
                 <span class="photo-label">iPad Air</span>
                 <span class="photo-price">€699</span>
               </div>
+              <div class="photo-glow"></div>
             </div>
           </div>
           
@@ -484,6 +514,18 @@ const subscribeNewsletter = async () => {
   email.value = ''
   subscribing.value = false
 }
+
+const handlePhotoClick = (productType: string) => {
+  console.log(`Photo clicked: ${productType}`)
+  // Animation de clic avec effet d'explosion
+  const event = new CustomEvent('photoClick', { detail: productType })
+  document.dispatchEvent(event)
+}
+
+const handlePhotoHover = (productType: string) => {
+  console.log(`Photo hovered: ${productType}`)
+  // Animation de hover avec effet de glow
+}
 </script>
 
 <style scoped>
@@ -692,33 +734,51 @@ const subscribeNewsletter = async () => {
 
 .juice-photo {
   position: absolute;
-  width: 180px;
-  height: 120px;
+  width: 200px;
+  height: 140px;
   border-radius: 20px;
   overflow: hidden;
   transform-style: preserve-3d;
   cursor: pointer;
-  transition: all var(--transition-normal);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(15px);
+  box-shadow: 
+    0 10px 30px rgba(0, 0, 0, 0.3),
+    0 0 20px rgba(139, 92, 246, 0.4);
+}
+
+.juice-photo:hover {
+  transform: perspective(1000px) rotateX(15deg) rotateY(15deg) translateZ(50px) scale(1.1);
+  box-shadow: 
+    0 20px 60px rgba(0, 0, 0, 0.4),
+    0 0 40px rgba(139, 92, 246, 0.8);
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
+.juice-photo:active {
+  transform: perspective(1000px) rotateX(25deg) rotateY(25deg) translateZ(30px) scale(0.95);
+  transition: all 0.1s ease-out;
 }
 
 .juice-photo:nth-child(1) {
   top: 10%;
-  left: -20%;
+  left: -25%;
 }
 
 .juice-photo:nth-child(2) {
   top: 30%;
-  right: -25%;
+  right: -30%;
 }
 
 .juice-photo:nth-child(3) {
   bottom: 40%;
-  left: -15%;
+  left: -20%;
 }
 
 .juice-photo:nth-child(4) {
   bottom: 20%;
-  right: -20%;
+  right: -25%;
 }
 
 .juice-photo:nth-child(5) {
@@ -731,11 +791,12 @@ const subscribeNewsletter = async () => {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform var(--transition-slow);
+  transition: all 0.6s cubic-bezier(0.23, 1, 0.320, 1);
 }
 
 .juice-photo:hover .juice-photo-img {
-  transform: scale(1.1);
+  transform: scale(1.2) rotate(2deg);
+  filter: brightness(1.1) contrast(1.1) saturate(1.2);
 }
 
 .photo-overlay {
@@ -743,11 +804,16 @@ const subscribeNewsletter = async () => {
   bottom: 0;
   left: 0;
   right: 0;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+  background: linear-gradient(to top, 
+    rgba(0, 0, 0, 0.9) 0%, 
+    rgba(139, 92, 246, 0.3) 50%,
+    transparent 100%
+  );
   padding: var(--space-3);
   color: white;
-  transform: translateY(100%);
-  transition: transform var(--transition-normal);
+  transform: translateY(80%);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  backdrop-filter: blur(10px);
 }
 
 .juice-photo:hover .photo-overlay {
@@ -759,13 +825,51 @@ const subscribeNewsletter = async () => {
   font-weight: 600;
   font-size: var(--font-size-sm);
   margin-bottom: var(--space-1);
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
 }
 
 .photo-price {
   display: block;
   font-weight: 700;
-  color: #f093fb;
+  background: linear-gradient(45deg, #f093fb, #f5576c, #4facfe);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   font-size: var(--font-size-sm);
+  text-shadow: 0 0 15px rgba(240, 147, 251, 0.8);
+}
+
+.photo-glow {
+  position: absolute;
+  inset: -5px;
+  background: linear-gradient(45deg, 
+    rgba(139, 92, 246, 0.6) 0%,
+    rgba(59, 130, 246, 0.6) 25%,
+    rgba(16, 185, 129, 0.6) 50%,
+    rgba(245, 158, 11, 0.6) 75%,
+    rgba(239, 68, 68, 0.6) 100%
+  );
+  border-radius: 25px;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  z-index: -1;
+  filter: blur(15px);
+}
+
+.juice-photo:hover .photo-glow {
+  opacity: 1;
+  animation: glowPulse 2s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
 }
 
 .decoration-elements {
