@@ -1,5 +1,8 @@
 <template>
   <div class="client-layout">
+    <!-- Netflix-style Intro Animation -->
+    <IntroAnimation v-if="showIntro" @complete="showIntro = false" />
+    
     <!-- Header -->
     <header class="header">
       <nav class="nav">
@@ -157,10 +160,12 @@ import {
   Settings, LogOut, Facebook, Twitter, Instagram 
 } from 'lucide-vue-next'
 import { useMainStore } from '../stores/main'
+import IntroAnimation from '../components/ui/IntroAnimation.vue'
 
 const store = useMainStore()
 const route = useRoute()
 
+const showIntro = ref(true)
 const isHomeActive = computed(() => route.path === '/')
 const isProductsActive = computed(() => route.path === '/products')
 const cartItemsCount = computed(() => store.cartItemsCount)
