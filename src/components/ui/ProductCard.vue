@@ -1,60 +1,82 @@
 <template>
   <div
     v-if="product"
-    class="product-card-wrapper"
+    class="product-card-wrapper hover-magnetic"
     @click="navigateToProduct"
     @keydown.enter="navigateToProduct"
+    @mouseenter="isHovered = true"
+    @mouseleave="isHovered = false"
     role="link"
     tabindex="0"
   >
-    <div class="product-card card hover-lift smooth-all stagger-item">
+    <div class="product-card card hover-lift smooth-all stagger-item spectacular-card">
       <div class="product-image-container">
+        <!-- Particules flottantes -->
+        <div class="card-particles" :class="{ 'active': isHovered }">
+          <div v-for="i in 15" :key="i" class="particle" :style="getParticleStyle(i)"></div>
+        </div>
+        
+        <!-- Éléments 3D flottants -->
+        <div class="floating-3d-elements" :class="{ 'active': isHovered }">
+          <div class="floating-cube"></div>
+          <div class="floating-sphere"></div>
+          <div class="floating-triangle"></div>
+        </div>
+        
         <img
           :src="product.image"
           :alt="product.name"
-          class="product-image smooth-transform"
-          :class="{ hovered: isHovered }"
+          class="product-image smooth-transform spectacular-image"
+          :class="{ 'hovered': isHovered }"
         />
-        <div class="product-overlay" :class="{ visible: isHovered }">
+        
+        <!-- Overlay avec effet holographique -->
+        <div class="product-overlay spectacular-overlay" :class="{ 'visible': isHovered }">
+          <div class="overlay-glow"></div>
           <AnimatedButton
             variant="primary"
             size="sm"
             @click.stop="$emit('quick-view', product)"
-            class="quick-view-btn"
+            class="quick-view-btn spectacular-btn"
           >
             Vue rapide
           </AnimatedButton>
         </div>
+        
         <div v-if="product.featured" class="featured-badge">
           <Star class="w-4 h-4" />
           Featured
         </div>
-        <button @click.stop="toggleWishlist" class="wishlist-btn">
+        
+        <button @click.stop="toggleWishlist" class="wishlist-btn spectacular-wishlist">
           <Heart class="w-5 h-5" :class="{ favorited: isInWishlist }" />
         </button>
+        
+        <!-- Effet de scan laser -->
+        <div class="laser-scan" :class="{ 'active': isHovered }"></div>
       </div>
 
-      <div class="card-body">
+      <div class="card-body spectacular-body">
         <div class="product-category text-sm text-gray-500 mb-2">
           {{ product.category }}
         </div>
 
         <h3
-          class="product-title text-lg font-semibold mb-2 hover:text-primary smooth-all"
+          class="product-title text-lg font-semibold mb-2 hover:text-primary smooth-all spectacular-title"
         >
           {{ product.name }}
         </h3>
 
-        <p class="product-description text-sm text-gray-600 mb-4 line-clamp-2">
+        <p class="product-description text-sm text-gray-600 mb-4 line-clamp-2 spectacular-description">
           {{ product.description }}
         </p>
 
-        <div class="product-rating mb-4 flex items-center gap-2">
+        <div class="product-rating mb-4 flex items-center gap-2 spectacular-rating">
           <div class="stars flex">
             <Star
               v-for="i in 5"
               :key="i"
-              class="w-4 h-4 cursor-pointer"
+              class="w-4 h-4 cursor-pointer spectacular-star"
               :class="
                 getUserStarClass(i)
               "
@@ -66,7 +88,7 @@
           </span>
         </div>
 
-        <div class="product-footer flex items-center justify-between">
+        <div class="product-footer flex items-center justify-between spectacular-footer">
           <div class="product-price">
             <span class="price-current text-2xl font-bold text-primary">
               {{ formatPrice(product.price) }}
@@ -78,13 +100,14 @@
             size="sm"
             @click.stop="addToCart"
             :disabled="product.stock === 0"
+            class="spectacular-add-btn"
           >
             <ShoppingCart class="w-4 h-4" />
             {{ product.stock === 0 ? "Rupture" : "Ajouter" }}
           </AnimatedButton>
         </div>
 
-        <div class="stock-indicator mt-3">
+        <div class="stock-indicator mt-3 spectacular-stock">
           <div class="stock-bar">
             <div
               class="stock-fill"
@@ -188,21 +211,185 @@ const getUserStarClass = (starIndex: number) => {
       : 'text-gray-300 star-hover'
   }
 }
+
+const getParticleStyle = (index: number) => {
+  const delay = Math.random() * 2
+  const duration = 2 + Math.random() * 3
+  const x = Math.random() * 100
+  const y = Math.random() * 100
+  const size = 2 + Math.random() * 4
+  const hue = Math.random() * 360
+  
+  return {
+    left: `${x}%`,
+    top: `${y}%`,
+    animationDelay: `${delay}s`,
+    animationDuration: `${duration}s`,
+    width: `${size}px`,
+    height: `${size}px`,
+    background: `hsl(${hue}, 70%, 60%)`
+  }
+}
 </script>
 
 <style scoped>
-.product-card {
+.spectacular-card {
   display: flex;
   flex-direction: column;
   height: 100%;
-  transition: all 0.3s var(--ease-out-expo);
+  transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   cursor: pointer;
+  transform-style: preserve-3d;
+  perspective: 1000px;
+  position: relative;
+  overflow: visible;
+}
+
+.spectacular-card:hover {
+  transform: perspective(1000px) rotateX(15deg) rotateY(15deg) translateZ(50px) scale(1.05);
+  box-shadow: 
+    0 0 60px rgba(139, 92, 246, 0.6),
+    0 30px 80px rgba(0, 0, 0, 0.3),
+    inset 0 0 30px rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(139, 92, 246, 0.5);
+}
+
+.card-particles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  z-index: 10;
+}
+
+.card-particles.active {
+  opacity: 1;
+}
+
+.particle {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.8;
+  animation: particleFloat 4s ease-in-out infinite;
+}
+
+@keyframes particleFloat {
+  0%, 100% {
+    transform: translateY(0px) scale(1) rotate(0deg);
+    opacity: 0.8;
+  }
+  50% {
+    transform: translateY(-30px) scale(1.5) rotate(180deg);
+    opacity: 1;
+  }
+}
+
+.floating-3d-elements {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  z-index: 5;
+}
+
+.floating-3d-elements.active {
+  opacity: 1;
+}
+
+.floating-cube {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 20px;
+  height: 20px;
+  background: linear-gradient(45deg, rgba(139, 92, 246, 0.8), rgba(59, 130, 246, 0.6));
+  border-radius: 4px;
+  animation: cubeFloat 3s ease-in-out infinite;
+  transform-style: preserve-3d;
+}
+
+.floating-sphere {
+  position: absolute;
+  top: 20px;
+  right: 15px;
+  width: 15px;
+  height: 15px;
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.8), rgba(6, 95, 70, 0.4));
+  border-radius: 50%;
+  animation: sphereOrbit 4s linear infinite;
+  transform-style: preserve-3d;
+}
+
+.floating-triangle {
+  position: absolute;
+  bottom: 15px;
+  left: 20px;
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 14px solid rgba(245, 158, 11, 0.7);
+  animation: triangleRotate 5s ease-in-out infinite;
+  transform-style: preserve-3d;
+}
+
+@keyframes cubeFloat {
+  0% {
+    transform: perspective(500px) rotateX(0deg) rotateY(0deg) rotateZ(0deg) translateZ(0px);
+  }
+  33% {
+    transform: perspective(500px) rotateX(120deg) rotateY(120deg) rotateZ(120deg) translateZ(20px);
+  }
+  66% {
+    transform: perspective(500px) rotateX(240deg) rotateY(240deg) rotateZ(240deg) translateZ(10px);
+  }
+  100% {
+    transform: perspective(500px) rotateX(360deg) rotateY(360deg) rotateZ(360deg) translateZ(0px);
+  }
+}
+
+@keyframes sphereOrbit {
+  0% {
+    transform: perspective(400px) rotateX(0deg) rotateY(0deg) translateZ(0px) scale(1);
+  }
+  25% {
+    transform: perspective(400px) rotateX(90deg) rotateY(90deg) translateZ(15px) scale(1.3);
+  }
+  50% {
+    transform: perspective(400px) rotateX(180deg) rotateY(180deg) translateZ(25px) scale(0.7);
+  }
+  75% {
+    transform: perspective(400px) rotateX(270deg) rotateY(270deg) translateZ(10px) scale(1.1);
+  }
+  100% {
+    transform: perspective(400px) rotateX(360deg) rotateY(360deg) translateZ(0px) scale(1);
+  }
+}
+
+@keyframes triangleRotate {
+  0% {
+    transform: perspective(300px) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+  }
+  50% {
+    transform: perspective(300px) rotateX(180deg) rotateY(180deg) rotateZ(180deg);
+  }
+  100% {
+    transform: perspective(300px) rotateX(360deg) rotateY(360deg) rotateZ(360deg);
+  }
 }
 
 .card-body {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
+  transform-style: preserve-3d;
+  transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.spectacular-card:hover .spectacular-body {
+  transform: translateZ(20px);
 }
 
 .product-footer {
@@ -214,41 +401,96 @@ const getUserStarClass = (starIndex: number) => {
   overflow: hidden;
   height: 240px;
   background: var(--color-gray-100);
+  transform-style: preserve-3d;
 }
 
-.product-image {
+.spectacular-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.5s var(--ease-out-expo);
+  transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transform-style: preserve-3d;
 }
 
-.product-image.hovered {
-  transform: scale(1.1);
+.spectacular-image.hovered {
+  transform: perspective(800px) rotateX(10deg) rotateY(10deg) scale(1.2) translateZ(30px);
+  filter: brightness(1.2) contrast(1.1) saturate(1.3);
 }
 
-.product-overlay {
+.spectacular-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.4);
+  background: linear-gradient(135deg, 
+    rgba(139, 92, 246, 0.8) 0%,
+    rgba(59, 130, 246, 0.6) 50%,
+    rgba(16, 185, 129, 0.4) 100%
+  );
   display: flex;
   align-items: center;
   justify-content: center;
   opacity: 0;
-  transition: opacity 0.3s ease;
+  transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transform: perspective(500px) rotateX(-90deg);
+  transform-origin: bottom;
+  backdrop-filter: blur(10px);
 }
 
-.product-overlay.visible {
+.spectacular-overlay.visible {
   opacity: 1;
+  transform: perspective(500px) rotateX(0deg);
 }
 
-.quick-view-btn {
+.overlay-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center,
+    rgba(255, 255, 255, 0.3) 0%,
+    transparent 70%
+  );
+  animation: glowPulse 2s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.2);
+  }
+}
+
+.spectacular-btn {
   transform: translateY(20px);
-  transition: transform 0.3s var(--ease-out-back);
+  transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  backdrop-filter: blur(15px);
+  border: 2px solid rgba(255, 255, 255, 0.3);
 }
 
-.product-overlay.visible .quick-view-btn {
-  transform: translateY(0);
+.spectacular-overlay.visible .spectacular-btn {
+  transform: translateY(0) scale(1.1);
+  box-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
+}
+
+.laser-scan {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(139, 92, 246, 0.8) 50%,
+    transparent 100%
+  );
+  opacity: 0;
+  transition: all 0.8s ease;
+}
+
+.laser-scan.active {
+  opacity: 1;
+  left: 100%;
 }
 
 .featured-badge {
@@ -264,10 +506,22 @@ const getUserStarClass = (starIndex: number) => {
   display: flex;
   align-items: center;
   gap: 4px;
-  animation: glow 2s ease-in-out infinite;
+  animation: badgeGlow 3s ease-in-out infinite;
+  transform-style: preserve-3d;
 }
 
-.wishlist-btn {
+@keyframes badgeGlow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(139, 92, 246, 0.5);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(139, 92, 246, 0.8);
+    transform: scale(1.05);
+  }
+}
+
+.spectacular-wishlist {
   position: absolute;
   top: 12px;
   right: 12px;
@@ -280,21 +534,95 @@ const getUserStarClass = (starIndex: number) => {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: all var(--transition-normal);
+  transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transform-style: preserve-3d;
 }
 
-.wishlist-btn:hover {
+.spectacular-wishlist:hover {
   background: white;
-  transform: scale(1.1);
+  transform: perspective(300px) rotateX(15deg) rotateY(15deg) scale(1.2) translateZ(10px);
+  box-shadow: 0 0 25px rgba(239, 68, 68, 0.6);
 }
 
-.wishlist-btn .favorited {
+.spectacular-wishlist .favorited {
   fill: var(--color-error);
   color: var(--color-error);
+  animation: heartBeat 1.5s ease-in-out infinite;
 }
 
-.product-title {
-  transition: color var(--transition-normal);
+@keyframes heartBeat {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+}
+
+.spectacular-title {
+  transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transform-style: preserve-3d;
+}
+
+.spectacular-card:hover .spectacular-title {
+  transform: translateZ(15px);
+  color: var(--color-primary);
+  text-shadow: 0 0 20px rgba(139, 92, 246, 0.6);
+}
+
+.spectacular-description {
+  transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transform-style: preserve-3d;
+}
+
+.spectacular-card:hover .spectacular-description {
+  transform: translateZ(10px);
+}
+
+.spectacular-rating {
+  transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transform-style: preserve-3d;
+}
+
+.spectacular-card:hover .spectacular-rating {
+  transform: translateZ(12px);
+}
+
+.spectacular-star {
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.spectacular-star:hover {
+  transform: perspective(200px) rotateX(15deg) rotateY(15deg) scale(1.3) translateZ(5px);
+  filter: drop-shadow(0 0 10px rgba(254, 196, 0, 0.8));
+}
+
+.spectacular-footer {
+  transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transform-style: preserve-3d;
+}
+
+.spectacular-card:hover .spectacular-footer {
+  transform: translateZ(18px);
+}
+
+.spectacular-add-btn {
+  transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transform-style: preserve-3d;
+}
+
+.spectacular-add-btn:hover {
+  transform: perspective(300px) rotateX(10deg) rotateY(10deg) scale(1.1) translateZ(8px);
+  box-shadow: 0 0 30px rgba(16, 185, 129, 0.6);
+}
+
+.spectacular-stock {
+  transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transform-style: preserve-3d;
+}
+
+.spectacular-card:hover .spectacular-stock {
+  transform: translateZ(8px);
 }
 
 .line-clamp-2 {

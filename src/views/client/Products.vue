@@ -10,30 +10,30 @@
       </div>
       
       <!-- Filters & Search -->
-      <div class="filters-section slide-in-right">
+      <div class="filters-section slide-in-right spectacular-filters">
         <div class="search-bar">
           <Search class="search-icon" />
           <input 
             v-model="searchQuery"
             type="text"
             placeholder="Rechercher un produit..."
-            class="search-input"
+            class="search-input spectacular-search"
           />
         </div>
         
-        <div class="filter-tabs">
+        <div class="filter-tabs spectacular-tabs">
           <button 
             v-for="category in categories"
             :key="category"
             @click="selectedCategory = category"
-            :class="['filter-tab', { 'active': selectedCategory === category }]"
+            :class="['filter-tab spectacular-tab', { 'active': selectedCategory === category }]"
           >
             {{ category }}
           </button>
         </div>
         
         <div class="sort-dropdown">
-          <select v-model="sortBy" class="sort-select">
+          <select v-model="sortBy" class="sort-select spectacular-sort">
             <option value="name">Nom</option>
             <option value="price-asc">Prix croissant</option>
             <option value="price-desc">Prix décroissant</option>
@@ -43,11 +43,12 @@
       </div>
       
       <!-- Products Grid -->
-      <div class="products-grid">
+      <div class="products-grid spectacular-grid">
         <ProductCard 
           v-for="product in filteredProducts"
           :key="product.id"
           :product="product"
+          class="spectacular-product-card"
           @quick-view="openQuickView"
           @update:product="updateProduct"
         />
@@ -159,6 +160,8 @@ const clearFilters = () => {
 .products-page {
   padding: var(--space-12) 0;
   min-height: 100vh;
+  perspective: 2000px;
+  transform-style: preserve-3d;
 }
 
 .container {
@@ -190,7 +193,7 @@ const clearFilters = () => {
   line-height: var(--line-height-relaxed);
 }
 
-.filters-section {
+.spectacular-filters {
   background: white;
   padding: var(--space-6);
   border-radius: var(--border-radius-xl);
@@ -200,6 +203,36 @@ const clearFilters = () => {
   grid-template-columns: 1fr auto auto;
   gap: var(--space-6);
   align-items: center;
+  transform-style: preserve-3d;
+  transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  overflow: hidden;
+}
+
+.spectacular-filters::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(139, 92, 246, 0.1) 50%,
+    transparent 100%
+  );
+  transition: left 0.8s ease;
+}
+
+.spectacular-filters:hover::before {
+  left: 100%;
+}
+
+.spectacular-filters:hover {
+  transform: perspective(1000px) rotateX(5deg) rotateY(5deg) translateZ(20px);
+  box-shadow: 
+    0 0 50px rgba(139, 92, 246, 0.4),
+    0 20px 60px rgba(0, 0, 0, 0.2);
 }
 
 .search-bar {
@@ -215,29 +248,40 @@ const clearFilters = () => {
   color: var(--color-gray-400);
   width: 20px;
   height: 20px;
+  transition: all 0.3s ease;
 }
 
-.search-input {
+.spectacular-search {
   width: 100%;
   padding: var(--space-3) var(--space-4) var(--space-3) 48px;
   border: 1px solid var(--color-gray-300);
   border-radius: var(--border-radius-lg);
   font-size: var(--font-size-base);
-  transition: all var(--transition-fast);
+  transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transform-style: preserve-3d;
 }
 
-.search-input:focus {
+.spectacular-search:focus {
   outline: none;
   border-color: var(--color-primary);
-  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+  box-shadow: 
+    0 0 0 3px rgba(139, 92, 246, 0.2),
+    0 0 30px rgba(139, 92, 246, 0.4);
+  transform: perspective(500px) rotateX(5deg) translateZ(10px);
 }
 
-.filter-tabs {
+.spectacular-search:focus + .search-icon {
+  color: var(--color-primary);
+  transform: translateY(-50%) scale(1.2);
+}
+
+.spectacular-tabs {
   display: flex;
   gap: var(--space-2);
+  transform-style: preserve-3d;
 }
 
-.filter-tab {
+.spectacular-tab {
   padding: var(--space-2) var(--space-4);
   border: 1px solid var(--color-gray-300);
   background: white;
@@ -245,40 +289,126 @@ const clearFilters = () => {
   font-size: var(--font-size-sm);
   font-weight: 500;
   cursor: pointer;
-  transition: all var(--transition-normal);
+  transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   white-space: nowrap;
+  transform-style: preserve-3d;
+  position: relative;
+  overflow: hidden;
 }
 
-.filter-tab:hover {
+.spectacular-tab::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(139, 92, 246, 0.3) 50%,
+    transparent 100%
+  );
+  transition: left 0.5s ease;
+}
+
+.spectacular-tab:hover::before {
+  left: 100%;
+}
+
+.spectacular-tab:hover {
   border-color: var(--color-primary);
   color: var(--color-primary);
+  transform: perspective(500px) rotateX(10deg) rotateY(10deg) translateZ(15px) scale(1.05);
+  box-shadow: 
+    0 0 25px rgba(139, 92, 246, 0.4),
+    0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
-.filter-tab.active {
+.spectacular-tab.active {
   background: var(--gradient-primary);
   border-color: transparent;
   color: white;
+  transform: perspective(500px) rotateX(5deg) rotateY(5deg) translateZ(20px);
+  box-shadow: 
+    0 0 40px rgba(139, 92, 246, 0.6),
+    0 15px 40px rgba(0, 0, 0, 0.3);
+  animation: activeTabGlow 2s ease-in-out infinite;
 }
 
-.sort-select {
+@keyframes activeTabGlow {
+  0%, 100% {
+    box-shadow: 
+      0 0 40px rgba(139, 92, 246, 0.6),
+      0 15px 40px rgba(0, 0, 0, 0.3);
+  }
+  50% {
+    box-shadow: 
+      0 0 60px rgba(139, 92, 246, 0.8),
+      0 20px 50px rgba(0, 0, 0, 0.4);
+  }
+}
+
+.spectacular-sort {
   padding: var(--space-3) var(--space-4);
   border: 1px solid var(--color-gray-300);
   border-radius: var(--border-radius-lg);
   font-size: var(--font-size-sm);
   background: white;
   cursor: pointer;
-  transition: border-color var(--transition-fast);
+  transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transform-style: preserve-3d;
 }
 
-.sort-select:focus {
+.spectacular-sort:focus {
   outline: none;
+  border-color: var(--color-primary);
+  transform: perspective(400px) rotateX(5deg) translateZ(10px);
+  box-shadow: 0 0 25px rgba(139, 92, 246, 0.4);
+}
+
+.spectacular-sort:hover {
+  transform: perspective(400px) rotateX(3deg) rotateY(3deg) translateZ(8px);
   border-color: var(--color-primary);
 }
 
-.products-grid {
+.spectacular-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   gap: var(--space-8);
+  transform-style: preserve-3d;
+  perspective: 1500px;
+}
+
+.spectacular-product-card {
+  animation: productCardEntrance 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+}
+
+.spectacular-product-card:nth-child(1) { animation-delay: 0.1s; }
+.spectacular-product-card:nth-child(2) { animation-delay: 0.2s; }
+.spectacular-product-card:nth-child(3) { animation-delay: 0.3s; }
+.spectacular-product-card:nth-child(4) { animation-delay: 0.4s; }
+.spectacular-product-card:nth-child(5) { animation-delay: 0.5s; }
+.spectacular-product-card:nth-child(6) { animation-delay: 0.6s; }
+.spectacular-product-card:nth-child(7) { animation-delay: 0.7s; }
+.spectacular-product-card:nth-child(8) { animation-delay: 0.8s; }
+.spectacular-product-card:nth-child(9) { animation-delay: 0.9s; }
+
+@keyframes productCardEntrance {
+  0% {
+    opacity: 0;
+    transform: perspective(1000px) rotateX(-90deg) rotateY(-45deg) translateZ(-200px) scale(0.5);
+    filter: blur(20px);
+  }
+  50% {
+    opacity: 0.7;
+    transform: perspective(1000px) rotateX(-45deg) rotateY(-22deg) translateZ(-100px) scale(0.8);
+    filter: blur(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0px) scale(1);
+    filter: blur(0px);
+  }
 }
 
 .empty-state {
@@ -310,24 +440,24 @@ const clearFilters = () => {
 }
 
 @media (max-width: 768px) {
-  .filters-section {
+  .spectacular-filters {
     grid-template-columns: 1fr;
     gap: var(--space-4);
   }
   
-  .filter-tabs {
+  .spectacular-tabs {
     overflow-x: auto;
     padding-bottom: var(--space-2);
   }
   
-  .products-grid {
+  .spectacular-grid {
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: var(--space-6);
   }
 }
 
 @media (max-width: 480px) {
-  .products-grid {
+  .spectacular-grid {
     grid-template-columns: 1fr;
   }
 }
