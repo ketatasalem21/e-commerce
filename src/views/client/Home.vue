@@ -27,6 +27,55 @@
           <h1 class="hero-title quantum-levitation">
             Découvrez l'<span class="gradient-text dimensional-portal">Excellence</span>
           </h1>
+          
+          <!-- Animation de photos juice pour e-commerce -->
+          <div class="excellence-photos-container">
+            <div class="juice-photo juice-photo-float" :style="{ animationDelay: '0s' }">
+              <img src="https://images.pexels.com/photos/18105/pexels-photo.jpg?auto=compress&cs=tinysrgb&w=300" 
+                   alt="MacBook Pro" class="juice-photo-img" />
+              <div class="photo-overlay">
+                <span class="photo-label">MacBook Pro M3</span>
+                <span class="photo-price">€2,499</span>
+              </div>
+            </div>
+            
+            <div class="juice-photo photo-morphing" :style="{ animationDelay: '2s' }">
+              <img src="https://images.pexels.com/photos/788946/pexels-photo-788946.jpeg?auto=compress&cs=tinysrgb&w=300" 
+                   alt="iPhone 15 Pro" class="juice-photo-img" />
+              <div class="photo-overlay">
+                <span class="photo-label">iPhone 15 Pro</span>
+                <span class="photo-price">€1,199</span>
+              </div>
+            </div>
+            
+            <div class="juice-photo photo-gallery-3d" :style="{ animationDelay: '4s' }">
+              <img src="https://images.pexels.com/photos/3780681/pexels-photo-3780681.jpeg?auto=compress&cs=tinysrgb&w=300" 
+                   alt="AirPods Pro" class="juice-photo-img" />
+              <div class="photo-overlay">
+                <span class="photo-label">AirPods Pro</span>
+                <span class="photo-price">€279</span>
+              </div>
+            </div>
+            
+            <div class="juice-photo photo-stack" :style="{ animationDelay: '1s' }">
+              <img src="https://images.pexels.com/photos/437037/pexels-photo-437037.jpeg?auto=compress&cs=tinysrgb&w=300" 
+                   alt="Apple Watch" class="juice-photo-img" />
+              <div class="photo-overlay">
+                <span class="photo-label">Apple Watch</span>
+                <span class="photo-price">€429</span>
+              </div>
+            </div>
+            
+            <div class="juice-photo juice-photo-float" :style="{ animationDelay: '3s' }">
+              <img src="https://images.pexels.com/photos/1334597/pexels-photo-1334597.jpeg?auto=compress&cs=tinysrgb&w=300" 
+                   alt="iPad Air" class="juice-photo-img" />
+              <div class="photo-overlay">
+                <span class="photo-label">iPad Air</span>
+                <span class="photo-price">€699</span>
+              </div>
+            </div>
+          </div>
+          
           <p class="hero-description fade-in-up">
             Des produits d'exception pour une expérience shopping unique. 
             Qualité premium, design moderne et innovation technologique.
@@ -199,13 +248,21 @@
           <div 
             v-for="(product, index) in featuredProducts"
             :key="product.id"
-            class="product-wrapper dna-helix"
+            class="product-wrapper product-3d-container"
             :style="{ animationDelay: `${index * 0.2}s` }"
           >
+            <!-- Éléments 3D flottants autour des produits -->
+            <div class="product-3d-elements">
+              <div class="product-cube-float" :style="{ animationDelay: `${index * 0.5}s` }"></div>
+              <div class="product-sphere-orbit" :style="{ animationDelay: `${index * 0.7}s` }"></div>
+              <div class="product-prism-morph" :style="{ animationDelay: `${index * 0.3}s` }"></div>
+            </div>
+            
             <ProductCard 
               :product="product"
               @quick-view="openQuickView"
               @update:product="updateProduct"
+              class="product-card-3d"
             />
           </div>
         </div>
@@ -625,6 +682,92 @@ const subscribeNewsletter = async () => {
   transform-style: preserve-3d;
 }
 
+.excellence-photos-container {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  transform-style: preserve-3d;
+  z-index: 1;
+}
+
+.juice-photo {
+  position: absolute;
+  width: 180px;
+  height: 120px;
+  border-radius: 20px;
+  overflow: hidden;
+  transform-style: preserve-3d;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+}
+
+.juice-photo:nth-child(1) {
+  top: 10%;
+  left: -20%;
+}
+
+.juice-photo:nth-child(2) {
+  top: 30%;
+  right: -25%;
+}
+
+.juice-photo:nth-child(3) {
+  bottom: 40%;
+  left: -15%;
+}
+
+.juice-photo:nth-child(4) {
+  bottom: 20%;
+  right: -20%;
+}
+
+.juice-photo:nth-child(5) {
+  top: 60%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.juice-photo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-slow);
+}
+
+.juice-photo:hover .juice-photo-img {
+  transform: scale(1.1);
+}
+
+.photo-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+  padding: var(--space-3);
+  color: white;
+  transform: translateY(100%);
+  transition: transform var(--transition-normal);
+}
+
+.juice-photo:hover .photo-overlay {
+  transform: translateY(0);
+}
+
+.photo-label {
+  display: block;
+  font-weight: 600;
+  font-size: var(--font-size-sm);
+  margin-bottom: var(--space-1);
+}
+
+.photo-price {
+  display: block;
+  font-weight: 700;
+  color: #f093fb;
+  font-size: var(--font-size-sm);
+}
+
 .decoration-elements {
   position: absolute;
   inset: 0;
@@ -978,6 +1121,129 @@ const subscribeNewsletter = async () => {
   transform-style: preserve-3d;
 }
 
+.product-3d-container {
+  position: relative;
+  transform-style: preserve-3d;
+}
+
+.product-3d-elements {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  transform-style: preserve-3d;
+  z-index: 1;
+}
+
+.product-cube-float {
+  position: absolute;
+  top: -20px;
+  left: -20px;
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(45deg, rgba(139, 92, 246, 0.8), rgba(59, 130, 246, 0.6));
+  border-radius: 8px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+  animation: productCubeFloat 8s ease-in-out infinite;
+  transform-style: preserve-3d;
+}
+
+.product-sphere-orbit {
+  position: absolute;
+  top: -15px;
+  right: -15px;
+  width: 30px;
+  height: 30px;
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.8), rgba(6, 95, 70, 0.4));
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(12px);
+  animation: productSphereOrbit 10s linear infinite;
+  transform-style: preserve-3d;
+}
+
+.product-prism-morph {
+  position: absolute;
+  bottom: -25px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 35px;
+  height: 35px;
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.8), rgba(239, 68, 68, 0.6));
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(15px);
+  animation: productPrismMorph 12s ease-in-out infinite;
+  transform-style: preserve-3d;
+}
+
+.product-card-3d {
+  position: relative;
+  z-index: 2;
+  transform-style: preserve-3d;
+  transition: all var(--transition-normal);
+}
+
+.product-card-3d:hover {
+  transform: perspective(1000px) rotateX(5deg) rotateY(5deg) translateZ(20px);
+}
+
+/* Animations spécifiques pour les produits */
+@keyframes productCubeFloat {
+  0% {
+    transform: perspective(800px) rotateX(0deg) rotateY(0deg) rotateZ(0deg) translateZ(0px);
+  }
+  33% {
+    transform: perspective(800px) rotateX(120deg) rotateY(120deg) rotateZ(120deg) translateZ(30px);
+  }
+  66% {
+    transform: perspective(800px) rotateX(240deg) rotateY(240deg) rotateZ(240deg) translateZ(15px);
+  }
+  100% {
+    transform: perspective(800px) rotateX(360deg) rotateY(360deg) rotateZ(360deg) translateZ(0px);
+  }
+}
+
+@keyframes productSphereOrbit {
+  0% {
+    transform: perspective(600px) rotateX(0deg) rotateY(0deg) translateZ(0px) scale(1);
+  }
+  25% {
+    transform: perspective(600px) rotateX(90deg) rotateY(90deg) translateZ(40px) scale(1.2);
+  }
+  50% {
+    transform: perspective(600px) rotateX(180deg) rotateY(180deg) translateZ(60px) scale(0.8);
+  }
+  75% {
+    transform: perspective(600px) rotateX(270deg) rotateY(270deg) translateZ(30px) scale(1.1);
+  }
+  100% {
+    transform: perspective(600px) rotateX(360deg) rotateY(360deg) translateZ(0px) scale(1);
+  }
+}
+
+@keyframes productPrismMorph {
+  0% {
+    transform: perspective(700px) rotateX(0deg) rotateY(0deg) rotateZ(0deg) translateZ(0px);
+    clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+  }
+  25% {
+    transform: perspective(700px) rotateX(90deg) rotateY(90deg) rotateZ(90deg) translateZ(25px);
+    clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+  }
+  50% {
+    transform: perspective(700px) rotateX(180deg) rotateY(180deg) rotateZ(180deg) translateZ(40px);
+    clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+  }
+  75% {
+    transform: perspective(700px) rotateX(270deg) rotateY(270deg) rotateZ(270deg) translateZ(20px);
+    clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+  }
+  100% {
+    transform: perspective(700px) rotateX(360deg) rotateY(360deg) rotateZ(360deg) translateZ(0px);
+    clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+  }
+}
+
 .testimonials {
   padding: var(--space-20) 0;
   background: rgba(255, 255, 255, 0.95);
@@ -1200,7 +1466,8 @@ const subscribeNewsletter = async () => {
   
   .floating-cards,
   .floating-3d-elements,
-  .decoration-elements {
+  .decoration-elements,
+  .excellence-photos-container {
     display: none;
   }
   
